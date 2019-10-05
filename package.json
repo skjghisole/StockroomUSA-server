@@ -1,0 +1,15 @@
+{
+  "name": "stockroom-server",
+  "version": "1.0.0",
+  "description": "...",
+  "main": "index.js",
+  "scripts": {
+    "build": "",
+    "start": ""
+  },
+  "author": "Stephen Karl Jeoffrey Hisole",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
