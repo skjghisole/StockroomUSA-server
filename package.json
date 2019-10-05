@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "rm -rf ./dist && babel src -d dist",
-    "start": ""
+    "start": "node dist/server"
   },
   "author": "Stephen Karl Jeoffrey Hisole",
   "license": "ISC",
