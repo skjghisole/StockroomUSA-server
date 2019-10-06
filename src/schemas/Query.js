@@ -3,7 +3,7 @@ import {
 	GraphQLID,
 	GraphQLList,
 	GraphQLString,
-	GraphQLNotNull
+	GraphQLNonNull
 } from 'graphql'
 
 import { Brand, Category, Product } from '../models'
@@ -21,7 +21,7 @@ const QueryType = new GraphQLObjectType({
 		brand: {
 			type: BrandType,
 			args: {
-				id: { type: new GraphQLNotNull(GraphQLID) }
+				id: { type: new GraphQLNonNull(GraphQLID) }
 			},
 			resolve(parent, args) {
 				return Brand.findById(args.id)
@@ -36,7 +36,7 @@ const QueryType = new GraphQLObjectType({
 		category: {
 			type: CategoryType,
 			args: {
-				id: { type: new GraphQLNotNull(GraphQLID) }
+				id: { type: new GraphQLNonNull(GraphQLID) }
 			},
 			resolve(parent, args) {
 				return Category.findById(args.id)
@@ -51,7 +51,7 @@ const QueryType = new GraphQLObjectType({
 		product: {
 			type: ProductType,
 			args: {
-				id: { type: new GraphQLNotNull(GraphQLID) },
+				id: { type: new GraphQLNonNull(GraphQLID) },
 			},
 			resolve(parent, args) {
 				return Product.findById(args.id)
