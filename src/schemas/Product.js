@@ -9,10 +9,10 @@ import {
 const ProductType = new GraphQLObjectType({
 	name: 'Product',
 	fields: () => ({
-		name: GraphQLString,
-		quantity: GraphQLInt,
-		categoryId: GraphQLID,
-		brandId: GraphQLID
+		name: { type: GraphQLString },
+		quantity: { type: GraphQLInt },
+		categoryId: { type: GraphQLID },
+		brandId: { type: GraphQLID }
 	})
 })
 
