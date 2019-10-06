@@ -1,3 +1,6 @@
+import { config } from 'dotenv'
+config()
+
 import express from 'express'
 import mongoose from 'mongoose'
 import graphqlHTTP from 'express-graphql'
@@ -12,25 +15,26 @@ const {
 	DB_PROTOCOL,
 	DB_PORT,
 	DB_HOST,
+	DB_NAME,
 	NODE_ENV
 } = process.env
 
 const hostedEnvs = ['staging', 'production', 'ci']
 let mongoURI;
 
-console.log(`Env is ${NODE_ENV}`)
+// console.log(process.env)
 
 if (!hostedEnvs.some(env => env === NODE_ENV)) {
-	mongoURI = `mongodb://${DB_HOST}:${DB_PORT}/`
+	mongoURI = `${DB_PROTOCOL}://${DB_HOST}:${DB_PORT}/${DB_NAME}`
 } else {
-	mongoURI =	`${DB_PROTOCOL}://${DB_USER_USERNAME}:${DB_USER_PASSWORD}@cluster0-bnvga.mongodb.net/admin?retryWrites=true&w=majority`
+	//mongodb+srv
+	mongoURI = `${DB_PROTOCOL}://${DB_USER_USERNAME}:${DB_USER_PASSWORD}@cluster0-bnvga.mongodb.net/admin?retryWrites=true&w=majority`
 }
 
-mongoose.connect(mongoURI)
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 mongoose.connection.once('open', () => {
 	console.log('DB connected')
 })
-
 
 app.use('/graphql', graphqlHTTP({
 	graphiql: true,
