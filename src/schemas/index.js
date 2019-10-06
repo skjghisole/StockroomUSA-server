@@ -13,14 +13,14 @@ let db = {
 	products: []
 }
 
-const ProductType = new GraphQLObjectType({
-	name: 'Product',
-	fields: () => ({
-		id: { type: GraphQLID },
-		name: { type: GraphQLString },
-		quantity: { type: GraphQLInt }
-	})
-})
+// const ProductType = new GraphQLObjectType({
+// 	name: 'Product',
+// 	fields: () => ({
+// 		id: { type: GraphQLID },
+// 		name: { type: GraphQLString },
+// 		quantity: { type: GraphQLInt }
+// 	})
+// })
 
 const RootQuery = new GraphQLObjectType({
 	name: 'RootQueryType',
