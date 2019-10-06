@@ -1,9 +1,9 @@
 import {
 	GraphQLString,
-	GraphQLObjectSchema
+	GraphQLObjectType
 } from 'graphql'
 
-const BrandType = new GraphQLObjectSchema({
+const BrandType = new GraphQLObjectType({
 	name: 'Brand',
 	fields: () => ({
 		name: { type: GraphQLString }

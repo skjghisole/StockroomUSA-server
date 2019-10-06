@@ -1,9 +1,9 @@
 import {
-	GraphQLObjectSchema,
+	GraphQLObjectType,
 	GraphQLString
 } from 'graphql'
 
-const CategoryType = new GraphQLObjectSchema({
+const CategoryType = new GraphQLObjectType({
 	name: 'Category',
 	fields: () => ({
 		name: { type: GraphQLString }

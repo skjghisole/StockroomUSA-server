@@ -1,5 +1,5 @@
 import {
-	GraphQLObjectSchema,
+	GraphQLObjectType,
 	GraphQLID,
 	GraphQLList,
 	GraphQLString,
@@ -15,7 +15,7 @@ import {
 } from './Types'
 
 
-const QueryType = new GraphQLObjectSchema({
+const QueryType = new GraphQLObjectType({
 	name: 'QueryType',
 	fields: {
 		brand: {

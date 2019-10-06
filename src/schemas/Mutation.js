@@ -1,5 +1,5 @@
 import {
-	GraphQLObjectSchema,
+	GraphQLObjectType,
 	GraphQLString,
 	GraphQLInt,
 	GraphQLID
@@ -17,7 +17,7 @@ import {
 	ProductType
 } from './Types'
 
-const MutationType = new GraphQLObjectSchema({
+const MutationType = new GraphQLObjectType({
 	name: 'Mutation',
 	fields: {
 		addBrand: {
