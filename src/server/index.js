@@ -28,8 +28,7 @@ console.log(`NODE_ENV -----------> ${NODE_ENV} <-----------`)
 if (!hostedEnvs.some(env => env === NODE_ENV)) {
 	mongoURI = `${DB_PROTOCOL}://${DB_HOST}:${DB_PORT}/${DB_NAME}`
 } else {
-	//mongodb+srv
-	mongoURI = `${DB_PROTOCOL}://${DB_USER_USERNAME}:${DB_USER_PASSWORD}@cluster0-bnvga.mongodb.net/admin?retryWrites=true&w=majority`
+	mongoURI = `${DB_PROTOCOL}://${DB_USER_USERNAME}:${DB_USER_PASSWORD}@cluster0-bnvga.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
 }
 
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
