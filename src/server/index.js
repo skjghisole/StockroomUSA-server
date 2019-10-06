@@ -16,13 +16,14 @@ const {
 	DB_PORT,
 	DB_HOST,
 	DB_NAME,
-	NODE_ENV
+	NODE_ENV,
+	PORT
 } = process.env
 
 const hostedEnvs = ['staging', 'production', 'ci']
 let mongoURI;
 
-// console.log(process.env)
+console.log(`NODE_ENV -----------> ${NODE_ENV} <-----------`)
 
 if (!hostedEnvs.some(env => env === NODE_ENV)) {
 	mongoURI = `${DB_PROTOCOL}://${DB_HOST}:${DB_PORT}/${DB_NAME}`
@@ -40,6 +41,6 @@ app.use('/graphql', graphqlHTTP({
 	graphiql: true,
 	schema
 }))
-const port = process.env.PORT || 4545
+const port = PORT || 4545
 
 app.listen(port, () => console.log(`Started on http://localhost:${port}`))
