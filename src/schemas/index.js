@@ -7,6 +7,8 @@ import {
 	GraphQLList
 } from 'graphql'
 
+import { Product } from '../models'
+
 let db = {
 	products: []
 }
@@ -20,7 +22,6 @@ const ProductType = new GraphQLObjectType({
 	})
 })
 
-
 const RootQuery = new GraphQLObjectType({
 	name: 'RootQueryType',
 	fields: {
@@ -30,13 +31,15 @@ const RootQuery = new GraphQLObjectType({
 				id: { type: GraphQLID }
 			},
 			resolve(parent, args) {
-				return db.products.find(x => x.id == args.id)
+				// return db.products.find(x => x.id == args.id)
+				return Product.findById(args.id)
 			}
 		},
 		products: {
 			type: new GraphQLList(ProductType),
-			resolve(parent, args) {
-				return db.products
+			resolve() {
+				// return db.products
+				return Product.find({})
 			}
 		}
 	}
@@ -51,10 +54,17 @@ const Mutation = new GraphQLObjectType({
 				name: { type: GraphQLString },
 				quantity: { type: GraphQLInt }
 			},
-			resolve(parent, { name, quantity }) {
-				let product = { name, quantity, id: db.products.length }
-				db.products.push(product)
-				return product
+			resolve(parent, { name, quantity, categoryId, brandId }) {
+				let product = new Product({
+					name,
+					quantity,
+					categoryId,
+					brandId
+				})
+				return product.save()
+				// let product = { name, quantity, id: db.products.length }
+				// db.products.push(product)
+				// return product
 			}
 		},
 		removeProduct: {
