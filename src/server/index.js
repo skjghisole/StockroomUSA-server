@@ -22,12 +22,14 @@ const {
 
 const hostedEnvs = ['staging', 'production', 'ci']
 let mongoURI;
+// let mongoURI = 'mongodb+srv://admin:CAFxSCW9xJt5u6B222ipxA6PphN4kpet9mSNAeBys2G7ENCXVSKizzNe74cLzCjU6cP8rYdDb9CpKKrWvusk7Qy@cluster0-bnvga.mongodb.net/development?retryWrites=true&w=majority'
 
 console.log(`NODE_ENV -----------> ${NODE_ENV} <-----------`)
 
 if (!hostedEnvs.some(env => env === NODE_ENV)) {
 	mongoURI = `${DB_PROTOCOL}://${DB_HOST}:${DB_PORT}/${DB_NAME}`
 } else {
+	//mongodb+srv
 	mongoURI = `${DB_PROTOCOL}://${DB_USER_USERNAME}:${DB_USER_PASSWORD}@cluster0-bnvga.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
 }
 
