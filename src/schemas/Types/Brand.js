@@ -9,7 +9,7 @@ import {
   GraphQLDateTime,
 } from 'graphql-iso-date'
 
-import { CategoryType } from './Types' 
+import { CategoryType } from './' 
 
 const BrandType = new GraphQLObjectType({
 	name: 'Brand',

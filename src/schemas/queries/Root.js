@@ -5,13 +5,15 @@ import {
 import {
 	BrandQueries,
 	CategoryQueries,
-	ProductQueries
+	ProductQueries,
+	UserQueries
 } from './'
 
 const fields = {
 	...BrandQueries,
 	...CategoryQueries,
-	...ProductQueries
+	...ProductQueries,
+	...UserQueries
 }
 
 const QueryType = new GraphQLObjectType({
