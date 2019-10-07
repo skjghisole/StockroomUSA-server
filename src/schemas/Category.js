@@ -1,13 +1,13 @@
 import {
 	GraphQLObjectType,
 	GraphQLString,
-	GrpahQLID
+	GraphQLID
 } from 'graphql'
 
 const CategoryType = new GraphQLObjectType({
 	name: 'Category',
 	fields: () => ({
-		id: { type: GrpahQLID },
+		id: { type: GraphQLID },
 		name: { type: GraphQLString }
 	})
 })

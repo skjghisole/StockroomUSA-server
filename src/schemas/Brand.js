@@ -1,14 +1,18 @@
 import {
 	GraphQLString,
 	GraphQLObjectType,
-	GraphQLID
+	GraphQLID,
+	GraphQLList
 } from 'graphql'
+
+import { CategoryType } from './Types' 
 
 const BrandType = new GraphQLObjectType({
 	name: 'Brand',
 	fields: () => ({
 		id: { type: GraphQLID },
-		name: { type: GraphQLString }
+		name: { type: GraphQLString },
+		categories: { type: new GraphQLList(CategoryType) }
 	})
 })
 

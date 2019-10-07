@@ -2,8 +2,13 @@ import {
 	GraphQLObjectType,
 	GraphQLString,
 	GraphQLInt,
-	GraphQLID
+	GraphQLID,
+	GraphQLList
 } from 'graphql'
+
+import {
+	toObjectIDConversion
+} from '../utils'
 
 import {
 	Brand,
@@ -51,16 +56,16 @@ const MutationType = new GraphQLObjectType({
 			args: {
 				name: { type: GraphQLString },
 				quantity: { type: GraphQLInt },
-				categoryId: { type: GraphQLID },
-				brandId: { type: GraphQLID }
+				categoryIds: { type: new GraphQLList(GraphQLID) },
+				brandIds: { type: new GraphQLList(GraphQLID) }
 			},
 			resolve(parent, args) {
-				const { name, quantity, categoryId, brandId } = args
+				const { name, quantity, categoryIds, brandIds } = args
 				const product = new Product({
 					name,
 					quantity,
-					categoryId,
-					brandId
+					categoryIds,
+					brandIds
 				})
 				return product.save()
 			}
