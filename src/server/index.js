@@ -1,6 +1,3 @@
-import { config } from 'dotenv'
-config()
-
 import express from 'express'
 import mongoose from 'mongoose'
 import graphqlHTTP from 'express-graphql'
@@ -22,7 +19,6 @@ const {
 
 const hostedEnvs = ['staging', 'production', 'ci']
 let mongoURI;
-// let mongoURI = 'mongodb+srv://admin:CAFxSCW9xJt5u6B222ipxA6PphN4kpet9mSNAeBys2G7ENCXVSKizzNe74cLzCjU6cP8rYdDb9CpKKrWvusk7Qy@cluster0-bnvga.mongodb.net/development?retryWrites=true&w=majority'
 
 console.log(`NODE_ENV -----------> ${NODE_ENV} <-----------`)
 
