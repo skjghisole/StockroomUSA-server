@@ -11,7 +11,9 @@ const ProductSchema = new Schema({
 	categoryIds: {
 		type: [ObjectId]
 	},
-	brandIds: [ObjectId]
+	brandIds: [ObjectId],
+	createdAt: Date,
+	updatedAt: Date
 }, { strict: true, timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' }})
 
 export default model('Product', ProductSchema)
