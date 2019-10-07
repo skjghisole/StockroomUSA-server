@@ -5,6 +5,10 @@ import {
 	GraphQLList
 } from 'graphql'
 
+import {
+  GraphQLDateTime,
+} from 'graphql-iso-date'
+
 import { CategoryType } from './Types' 
 
 const BrandType = new GraphQLObjectType({
@@ -12,6 +16,8 @@ const BrandType = new GraphQLObjectType({
 	fields: () => ({
 		id: { type: GraphQLID },
 		name: { type: GraphQLString },
+		createdAt: { type: GraphQLDateTime },
+		updatedAt: { type: GraphQLDateTime },
 		categories: { type: new GraphQLList(CategoryType) }
 	})
 })

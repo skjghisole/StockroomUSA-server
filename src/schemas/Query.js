@@ -50,6 +50,7 @@ const QueryType = new GraphQLObjectType({
 		},
 		product: {
 			type: ProductType,
+			description: 'For querying products with ID',
 			args: {
 				id: { type: new GraphQLNonNull(GraphQLID) },
 			},
@@ -59,6 +60,7 @@ const QueryType = new GraphQLObjectType({
 		},
 		products: {
 			type: new GraphQLList(ProductType),
+			description: 'For querying all products',
 			args: {
 				name: { type: GraphQLString }
 			},
