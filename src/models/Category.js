@@ -4,6 +4,6 @@ const { Schema, model } = mongoose
 
 const CategorySchema = new Schema({
 	name: String
-})
+}, { strict: true, timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' }})
 
 export default model('Category', CategorySchema)
