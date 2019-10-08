@@ -28,6 +28,6 @@ import mutation from './Mutations/Root'
 // })
 
 export default new GraphQLSchema({
-	query,
+	query: query,
 	mutation
 })
