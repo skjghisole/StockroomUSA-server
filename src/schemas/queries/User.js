@@ -11,11 +11,15 @@ import {
 	User
 } from '../../models'
 
+import {
+	isAuthenticated
+} from '../../utils'
+
 const UserQueries = {
 	users: {
 		type: new GraphQLList(UserType),
-		resolve() {
-			return User.find({})
+		resolve(_, args, ctx) {
+			return isAuthenticated(ctx, User.find, {})
 		}
 	},
 	user: {
