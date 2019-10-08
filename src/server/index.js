@@ -1,8 +1,8 @@
-// import '@babel/polyfill'
+import '@babel/polyfill'
 import express from 'express'
 import mongoose from 'mongoose'
-import graphqlHTTP from 'express-graphql'
-import schema from '../schemas'
+// import graphqlHTTP from 'express-graphql'
+// import schema from '../schemas'
 import cors from 'cors'
 
 const app = express()
