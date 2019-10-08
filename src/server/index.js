@@ -7,6 +7,8 @@ import cors from 'cors'
 
 const app = express()
 
+app.use(cors())
+
 const {
 	DB_USER_USERNAME,
 	DB_USER_PASSWORD,
@@ -34,7 +36,6 @@ mongoose.connection.once('open', () => {
 	console.log('DB connected')
 })
 
-app.use(cors())
 app.use('/graphql', graphqlHTTP({
 	graphiql: true,
 	schema
