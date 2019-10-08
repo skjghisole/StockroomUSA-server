@@ -12,14 +12,14 @@ import {
 } from '../../models'
 
 import {
-	isAuthenticated
+	adminAuthenticated
 } from '../../utils'
 
 const UserQueries = {
 	users: {
 		type: new GraphQLList(UserType),
 		resolve(_, args, ctx) {
-			return isAuthenticated(ctx, User.find, {})
+			return adminAuthenticated(ctx, User.find, {})
 		}
 	},
 	user: {

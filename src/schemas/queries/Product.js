@@ -28,8 +28,7 @@ const ProductQueries = {
 		args: {
 			name: { type: GraphQLString }
 		},
-		resolve(parent, args) {
-			console.log(args)
+		resolve() {
 			return Product.find({})
 		}
 	}

@@ -14,6 +14,11 @@ import {
 	ProductType
 } from '../Types'
 
+import {
+	adminAuthenticated
+} from '../../utils'
+
+
 const ProductMutation = {
 	addProduct: {
 		type: ProductType,
@@ -23,7 +28,7 @@ const ProductMutation = {
 			categoryIds: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) },
 			brandIds: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) }
 		},
-		resolve(parent, args) {
+		resolve(parent, args, ctx) {
 			const { name, quantity, categoryIds, brandIds } = args
 			const product = new Product({
 				name,
@@ -31,7 +36,7 @@ const ProductMutation = {
 				categoryIds,
 				brandIds
 			})
-			return product.save()
+			return adminAuthenticated(ctx, product.save.bind(product))
 		}
 	}
 }
