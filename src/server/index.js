@@ -3,12 +3,11 @@ import express from 'express'
 import mongoose from 'mongoose'
 import graphqlHTTP from 'express-graphql'
 import schema from '../schemas'
-// import cors from 'cors'
+import cors from 'cors'
 
 const app = express()
 
-// app.use(cors())
-
+app.use(cors())
 
 const {
 	DB_USER_USERNAME,
