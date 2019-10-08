@@ -1,24 +1,41 @@
 import {
 	GraphQLObjectType,
+	GraphQLList
 } from 'graphql'
 
 import {
-	BrandQueries,
+	UserType
+} from '../Types'
+
+import {
+	User
+} from '../../models'
+
+
+// import {
+	// BrandQueries,
 	// CategoryQueries,
 	// ProductQueries,
 	// UserQueries
-} from './'
+// } from './'
 
-const fields = {
-	...BrandQueries,
+// const fields = {
+	// ...BrandQueries,
 	// ...CategoryQueries,
 	// ...ProductQueries,
 	// ...UserQueries
-}
+// }
 
 const QueryType = new GraphQLObjectType({
 	name: 'QueryType',
-	fields
+	fields: {
+		users: {
+			type: new GraphQLList(UserType),
+			resolve() {
+				return User.find({})
+			}
+		}
+	}
 })
 
 export default QueryType
