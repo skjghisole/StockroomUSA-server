@@ -41,6 +41,6 @@ app.use('/graphql', graphqlHTTP({
 	schema
 }))
 
-const port = PORT || 4545
+const port = PORT
 
 app.listen(port, () => console.log(`Started on http://localhost:${port}`))
