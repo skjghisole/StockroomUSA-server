@@ -1,11 +1,11 @@
-import toObjectIDConversion from './toObjectIDConversion'
-// import {
-// 	isAuthenticated,
-// 	adminAuthenticated
-// } from './authentication'
+// import toObjectIDConversion from './toObjectIDConversion'
+import {
+	isAuthenticated,
+	adminAuthenticated
+} from './authentication'
 
 export {
-	toObjectIDConversion,
-	// isAuthenticated,
-	// adminAuthenticated
+	// toObjectIDConversion,
+	isAuthenticated,
+	adminAuthenticated
 }
