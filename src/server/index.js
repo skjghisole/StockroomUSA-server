@@ -36,11 +36,11 @@ mongoose.connection.once('open', () => {
 	console.log('DB connected')
 })
 
-app.use('/graphql', graphqlHTTP({
-	graphiql: true,
-	schema
-}))
+// app.use('/graphql', graphqlHTTP({
+// 	graphiql: true,
+// 	schema
+// }))
 
-const port = PORT
+const port = PORT || 4545
 
 app.listen(port, () => console.log(`Started on http://localhost:${port}`))
