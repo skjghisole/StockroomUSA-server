@@ -2,18 +2,18 @@ import {
 	GraphQLObjectType,
 } from 'graphql'
 
-// import {
-// 	BrandMutations,
-// 	CategoryMutations,
-// 	ProductMutations,
-// 	UserMutations
-// } from './'
+import {
+	BrandMutations,
+	CategoryMutations,
+	ProductMutations,
+	UserMutations
+} from './'
 
 const fields = {
-	// ...BrandMutations,
-	// ...CategoryMutations,
-	// ...ProductMutations,
-	// ...UserMutations
+	...BrandMutations,
+	...CategoryMutations,
+	...ProductMutations,
+	...UserMutations
 }
 
 const MutationType = new GraphQLObjectType({

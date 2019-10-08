@@ -2,7 +2,7 @@ import '@babel/polyfill'
 import express from 'express'
 import mongoose from 'mongoose'
 import graphqlHTTP from 'express-graphql'
-import schema from '../schemas'
+// import schema from '../schemas'
 import cors from 'cors'
 
 const app = express()
@@ -38,7 +38,7 @@ mongoose.connection.once('open', () => {
 
 app.use('/graphql', graphqlHTTP({
 	graphiql: true,
-	schema
+	// schema
 }))
 
 const port = PORT || 4545
