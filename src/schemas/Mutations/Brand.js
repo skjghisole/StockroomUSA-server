@@ -10,6 +10,10 @@ import {
 	BrandType,
 } from '../Types'
 
+import {
+	adminAuthenticated
+} from '../../utils'
+
 
 const BrandMutation = {
 	addBrand: {
@@ -17,12 +21,13 @@ const BrandMutation = {
 		args: {
 			name: { type: GraphQLString }
 		},
-		resolve(parent, args) {
+		resolve(parent, args, ctx) {
 			const { name } = args
 			const brand = new Brand({
 				name
 			})
-			return brand.save()
+
+			return adminAuthenticated(ctx, brand.save.bind(brand))
 		}
 	},
 }
