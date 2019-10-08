@@ -12,7 +12,7 @@ import {
 // 	User
 // } from '../models'
 
-import query from './Queries/Root'
+import query from './Q/Root'
 import mutation from './Mutations/Root'
 
 // const query = new GraphQLObjectType({
