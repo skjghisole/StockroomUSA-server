@@ -7,7 +7,7 @@ import {
   GraphQLDateTime,
 } from 'graphql-iso-date'
 
-import { CredentialType } from './'
+import { CredentialType, RoleType } from './'
 
 const UserType = new GraphQLObjectType({
 	name: 'User',
@@ -17,6 +17,7 @@ const UserType = new GraphQLObjectType({
 		password: { type: GraphQLString },
 		createdAt: { type: GraphQLDateTime },
 		updatedAt: { type: GraphQLDateTime },
+		role: { type: RoleType },
 		credentials: {
 			type: CredentialType,
 			resolve(parent) {
