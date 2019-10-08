@@ -10,9 +10,9 @@ import {
 	BrandType,
 } from '../Types'
 
-// import {
-// 	adminAuthenticated
-// } from '../../utils'
+import {
+	adminAuthenticated
+} from '../../utils'
 
 
 const BrandMutation = {
@@ -27,8 +27,7 @@ const BrandMutation = {
 				name
 			})
 
-			// return adminAuthenticated(ctx, brand.save.bind(brand))
-			return brand.save()
+			return adminAuthenticated(ctx, brand.save.bind(brand))
 		}
 	},
 }
