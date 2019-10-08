@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import { USER_ROLE } from '../constants'
 
 const { Schema, model } = mongoose
 
@@ -22,6 +23,11 @@ const UserSchema = new Schema({
 	lastName: {
 		type: String,
 		required: true
+	},
+	role: {
+		type: String,
+		required: true,
+		default: USER_ROLE
 	},
 	createdAt: Date,
 	updatedAt: Date
