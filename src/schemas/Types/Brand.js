@@ -9,7 +9,9 @@ import {
   GraphQLDateTime,
 } from 'graphql-iso-date'
 
-import { CategoryType } from './' 
+import { Product } from '../../models'
+
+import { CategoryType, ProductType } from './' 
 
 const BrandType = new GraphQLObjectType({
 	name: 'Brand',
@@ -18,7 +20,13 @@ const BrandType = new GraphQLObjectType({
 		name: { type: GraphQLString },
 		createdAt: { type: GraphQLDateTime },
 		updatedAt: { type: GraphQLDateTime },
-		categories: { type: new GraphQLList(CategoryType) }
+		categories: { type: new GraphQLList(CategoryType) },
+		products: {
+			type: new GraphQLList(ProductType),
+			resolve({id}) {
+				return Product.find({ brandIds: { $in: [id]  } })
+			}
+		}
 	})
 })
 
