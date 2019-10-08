@@ -14,9 +14,9 @@ import {
 	ProductType
 } from '../Types'
 
-import {
-	adminAuthenticated
-} from '../../utils'
+// import {
+// 	adminAuthenticated
+// } from '../../utils'
 
 
 const ProductMutation = {
@@ -36,7 +36,8 @@ const ProductMutation = {
 				categoryIds,
 				brandIds
 			})
-			return adminAuthenticated(ctx, product.save.bind(product))
+			// return adminAuthenticated(ctx, product.save.bind(product))
+			return product.save()
 		}
 	}
 }

@@ -10,9 +10,9 @@ import {
 	CategoryType,
 } from '../Types'
 
-import {
-	adminAuthenticated
-} from '../../utils'
+// import {
+// 	adminAuthenticated
+// } from '../../utils'
 
 
 const CategoryMutation = {
@@ -26,7 +26,8 @@ const CategoryMutation = {
 			const category = new Category({
 				name
 			})
-			return adminAuthenticated(ctx, category.save.bind(category))
+			// return adminAuthenticated(ctx, category.save.bind(category))
+			return category.save()
 		}
 	},
 }
