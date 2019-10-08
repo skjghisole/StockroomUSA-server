@@ -4,7 +4,7 @@ import {
 } from 'graphql'
 
 import {
-	UserType
+	UserType,
 } from '../Types'
 
 import {
@@ -14,12 +14,17 @@ import {
 const UserQueries = {
 	users: {
 		type: new GraphQLList(UserType),
-		args: {
-			username: { type: GraphQLString },
-			email: { type: GraphQLString }
-		},
 		resolve() {
 			return User.find({})
+		}
+	},
+	user: {
+		type: UserType,
+		args: {
+			username: { type: GraphQLString },
+		},
+		resolve(_, { username }) {
+			return User.findOne({ username })
 		}
 	}
 }

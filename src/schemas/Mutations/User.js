@@ -1,6 +1,7 @@
 import {
 	GraphQLString,
 } from 'graphql'
+import bcrypt from 'bcrypt'
 
 import {
 	UserType
@@ -20,7 +21,7 @@ const UserMutation = {
 			firstName: { type: GraphQLString },
 			lastName: { type: GraphQLString }
 		},
-		resolve(_, { email, username, password, firstName, lastName }) {
+		async resolve(_, { email, username, password, firstName, lastName }) {
 			const user = new User({
 				email,
 				username,
@@ -28,6 +29,10 @@ const UserMutation = {
 				firstName,
 				lastName
 			})
+			const salt = await bcrypt.genSalt(10)
+			const hash = await bcrypt.hash(password, salt)
+			user.password = hash
+
 			return user.save()
 		}
 	}
