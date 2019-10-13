@@ -11,15 +11,17 @@ import {
 	User
 } from '../../models'
 
-import {
-	adminAuthenticated
-} from '../../utils'
-
 const UserQueries = {
 	users: {
 		type: new GraphQLList(UserType),
-		resolve(_, args, ctx) {
-			return adminAuthenticated(ctx, User.find, {})
+		resolve(_, args, { user, authError }) {
+			if (authError) {
+				return authError
+			} else if (user.role !== "ADMIN") {
+				throw new Error("NOT AUTHORIZED!")
+			} else {
+				return User.find({})
+			}
 		}
 	},
 	user: {
@@ -29,6 +31,16 @@ const UserQueries = {
 		},
 		resolve(_, { username }) {
 			return User.findOne({ username })
+		}
+	},
+	me: {
+		type: UserType,
+		async resolve(parent, _, { user, authError}) {
+			if (authError) {
+				throw new Error(authError)
+			} else {
+				return user
+			}
 		}
 	}
 }
