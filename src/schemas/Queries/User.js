@@ -15,13 +15,18 @@ const UserQueries = {
 	users: {
 		type: new GraphQLList(UserType),
 		resolve(_, args, { user, authError }) {
-			if (authError) {
-				return authError
-			} else if (user.role !== "ADMIN") {
-				throw new Error("NOT AUTHORIZED!")
-			} else {
-				return User.find({})
+			try {
+				if (authError) {
+					throw new Error(authError)
+				} else if (user.role !== "ADMIN") {
+					throw new Error("NOT AUTHORIZED!")
+				} else {
+					return User.find({})
+				}
+			} catch (e) {
+				return e
 			}
+
 		}
 	},
 	user: {

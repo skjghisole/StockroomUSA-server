@@ -33,10 +33,11 @@ const ProductMutation = {
 				categoryIds,
 				brandIds
 			})
-			if (user.role === "ADMIN") {
+			
+			if (user.role === "ADMIN" && !authError) {
 				return product.save()
 			} else if (authError) {
-				return authError
+				throw new Error(authError)
 			} else {
 				throw new Error('NOT AUTHORIZED!')
 			}
