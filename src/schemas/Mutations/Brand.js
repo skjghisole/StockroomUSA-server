@@ -10,10 +10,6 @@ import {
 	BrandType,
 } from '../Types'
 
-import {
-	adminAuthenticated
-} from '../../utils'
-
 
 const BrandMutation = {
 	addBrand: {
@@ -21,13 +17,18 @@ const BrandMutation = {
 		args: {
 			name: { type: GraphQLString }
 		},
-		resolve(parent, args, ctx) {
+		resolve(parent, args, { user, authError }) {
 			const { name } = args
 			const brand = new Brand({
 				name
 			})
-
-			return adminAuthenticated(ctx, brand.save.bind(brand))
+			if (authError) {
+				throw new Error(authError)
+			} else if (user.role !== "ADMIN") {
+				throw new Error("NOT AUTHORIZED!")
+			} else {
+				return brand.save()
+			}
 		}
 	},
 }

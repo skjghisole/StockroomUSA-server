@@ -14,10 +14,6 @@ import {
 	ProductType
 } from '../Types'
 
-import {
-	adminAuthenticated
-} from '../../utils'
-
 
 const ProductMutation = {
 	addProduct: {
@@ -30,13 +26,20 @@ const ProductMutation = {
 		},
 		resolve(parent, args, ctx) {
 			const { name, quantity, categoryIds, brandIds } = args
+			const { user, authError } = ctx
 			const product = new Product({
 				name,
 				quantity,
 				categoryIds,
 				brandIds
 			})
-			return adminAuthenticated(ctx, product.save.bind(product))
+			if (user.role === "ADMIN") {
+				return product.save()
+			} else if (authError) {
+				return authError
+			} else {
+				throw new Error('NOT AUTHORIZED!')
+			}
 		}
 	}
 }

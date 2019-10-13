@@ -10,23 +10,24 @@ import {
 	CategoryType,
 } from '../Types'
 
-import {
-	adminAuthenticated
-} from '../../utils'
-
-
 const CategoryMutation = {
 	addCategory: {
 		type: CategoryType,
 		args: {
 			name: { type: GraphQLString }
 		},
-		resolve(parent, args, ctx) {
+		resolve(parent, args, { authError, user }) {
 			const { name } = args
 			const category = new Category({
 				name
 			})
-			return adminAuthenticated(ctx, category.save.bind(category))
+			if (authError) {
+				throw new Error(authError)
+			} else if (user.role !== "ADMIN") {
+				throw new Error("NOT AUTHORIZED")
+			} else {
+				return category.save()
+			}
 		}
 	},
 }
