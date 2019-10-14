@@ -46,7 +46,9 @@ const ProductMutation = {
 	removeProduct: {
 		type: ProductType,
 		args: {
-			id: GraphQLID
+			id: {
+				type: GraphQLID
+			}
 		},
 		async resolve(parent, args, { user, authError }) {
 			const { id } = args
@@ -56,6 +58,38 @@ const ProductMutation = {
 				const removedProduct = await Product.findOneAndDelete({ _id: id })
 				if (!removedProduct) throw new Error(`Product of ID: (${id}) not found!`)
 				return removedProduct
+			} catch (err) {
+				return err
+			}
+		}
+	},
+	updateProduct: {
+		type: ProductType,
+		args: {
+			id: {
+				type: GraphQLID
+			},
+			name: {
+				type: GraphQLString
+			},
+			quantity: {
+				type: GraphQLInt
+			},
+			brandIds: {
+				type: new GraphQLList(GraphQLID)
+			},
+			categoryIds: {
+				type: new GraphQLList(GraphQLID)
+			}
+		},
+		async resolve(parent, args, { user, authError }) {
+			const { id, ...toUpdate } = args
+			try {
+				if (authError) throw new Error(authError)
+				if (user.role !== "ADMIN") throw new Error("NOT AUTHORIZED")
+				const updatedProduct = await Product.findOneAndUpdate({ _id: id }, toUpdate)
+				if (!updatedProduct) throw new Error("Error in updating Product")
+				return updatedProduct
 			} catch (err) {
 				return err
 			}

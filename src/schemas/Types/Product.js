@@ -2,7 +2,8 @@ import {
 	GraphQLObjectType,
 	GraphQLString,
 	GraphQLInt,
-	GraphQLList
+	GraphQLList,
+	GraphQLID
 } from 'graphql'
 
 import {
@@ -30,6 +31,7 @@ const ProductType = new GraphQLObjectType({
 				})
 			}
 		},
+		id: { type: GraphQLID },
 		categories: {
 			type: new GraphQLList(CategoryType),
 			resolve(parent, args) {
