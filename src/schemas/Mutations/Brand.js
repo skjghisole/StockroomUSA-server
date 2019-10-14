@@ -1,6 +1,7 @@
 import {
 	GraphQLString,
-	GraphQLID
+	GraphQLID,
+	GraphQLList
 } from 'graphql'
 
 import {
@@ -49,6 +50,27 @@ const BrandMutation = {
 					if (!removed) throw new Error(`Brand of ID:(${id}) not found!`)
 					return removed
 				}
+			} catch (err) {
+				return err
+			}
+		}
+	},
+	updateBrand: {
+		type: BrandType,
+		args: {
+			id: { type: GraphQLID },
+			name: { type: GraphQLString },
+			categoryIds: { type: new GraphQLList(GraphQLID) }
+		},
+		async resolve(parent, args, { user, authError }) {
+			const { id, ...toUpdate } = args
+			try {
+				if (authError) throw new Error(authError)
+				if (user.role !== "ADMIN") throw new Error("NOT AUTHORIZED")
+
+				const updatedBrand = await Brand.findOneAndUpdate({ _id: id }, toUpdate, { new: true })
+				if (!updatedBrand) throw new Error("[Error]: Error in UPDATING brand")
+				return updatedBrand
 			} catch (err) {
 				return err
 			}

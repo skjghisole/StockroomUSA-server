@@ -87,8 +87,8 @@ const ProductMutation = {
 			try {
 				if (authError) throw new Error(authError)
 				if (user.role !== "ADMIN") throw new Error("NOT AUTHORIZED")
-				const updatedProduct = await Product.findOneAndUpdate({ _id: id }, toUpdate)
-				if (!updatedProduct) throw new Error("Error in updating Product")
+				const updatedProduct = await Product.findOneAndUpdate({ _id: id }, toUpdate, { new: true })
+				if (!updatedProduct) throw new Error("[Error]: Error in UPDATING product")
 				return updatedProduct
 			} catch (err) {
 				return err

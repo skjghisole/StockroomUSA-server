@@ -66,7 +66,7 @@ const CategoryMutation = {
 				if (user.role !== "ADMIN") throw new Error("NOT AUTHORIZED!")
 				
 				const updatedCategory = await Category.findOneAndUpdate({ _id: id }, toUpdate, { new: true })
-				if (!updatedCategory) throw new Error("[Error] in UPDATING category")
+				if (!updatedCategory) throw new Error("[Error] Error in UPDATING category")
 				return updatedCategory
 			} catch (err) {
 				return err
