@@ -42,7 +42,7 @@ mongoose.connection.once('open', () => {
 
 app.use('/graphql', graphqlHTTP({
 	graphiql: true,
-	schema
+	schema,
 }))
 
 const port = PORT || 4545
