@@ -42,6 +42,24 @@ const ProductMutation = {
 				throw new Error('NOT AUTHORIZED!')
 			}
 		}
+	},
+	removeProduct: {
+		type: ProductType,
+		args: {
+			id: GraphQLID
+		},
+		async resolve(parent, args, { user, authError }) {
+			const { id } = args
+			try {
+				if (authError) throw new Error(authError)
+				if (user.role !== "ADMIN") throw new Error("NOT AUTHORIZED")
+				const removedProduct = await Product.findOneAndDelete({ _id: id })
+				if (!removedProduct) throw new Error(`Product of ID: (${id}) not found!`)
+				return removedProduct
+			} catch (err) {
+				return err
+			}
+		}
 	}
 }
 
