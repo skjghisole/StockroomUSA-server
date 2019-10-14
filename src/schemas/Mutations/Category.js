@@ -1,5 +1,6 @@
 import {
 	GraphQLString,
+	GraphQLID
 } from 'graphql'
 
 import {
@@ -30,6 +31,28 @@ const CategoryMutation = {
 			}
 		}
 	},
+	removeCategory: {
+		type: CategoryType,
+		args: {
+			id: { type: GraphQLID }
+		},
+		async resolve(parent, args, { authError, user }) {
+			const { id } = args
+			try {
+				if (authError) {
+					throw new Error(authError)
+				} else if (user.role !== "ADMIN") {
+					throw new Error("NOT AUTHORIZED!")
+				}
+
+				const removedCategory = await Category.findOneAndDelete({ _id: id })
+				if (!removedCategory) throw new Error(`Category of ID: (${id}) not found!`)
+				return removedCategory 
+			} catch (err) {
+				return err
+			}
+		}
+	}
 }
 
 export default CategoryMutation
