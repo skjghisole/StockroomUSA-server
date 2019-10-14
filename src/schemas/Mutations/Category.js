@@ -52,6 +52,26 @@ const CategoryMutation = {
 				return err
 			}
 		}
+	},
+	updateCategory: {
+		type: CategoryType,
+		args: {
+			id: { type: GraphQLID },
+			name: { type: GraphQLString }
+		},
+		async resolve(parent, args, { authError, user }) {
+			const { id, ...toUpdate } = args
+			try {
+				if (authError) throw new Error(authError)
+				if (user.role !== "ADMIN") throw new Error("NOT AUTHORIZED!")
+				
+				const updatedCategory = await Category.findOneAndUpdate({ _id: id }, toUpdate, { new: true })
+				if (!updatedCategory) throw new Error("[Error] in UPDATING category")
+				return updatedCategory
+			} catch (err) {
+				return err
+			}
+		}
 	}
 }
 
