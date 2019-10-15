@@ -1,7 +1,8 @@
 import {
 	GraphQLID,
 	GraphQLList,
-	GraphQLNonNull
+	GraphQLNonNull,
+	GraphQLString
 } from 'graphql'
 
 import { Category } from '../../models'
@@ -14,7 +15,9 @@ const CategoryQueries = {
 	category: {
 		type: CategoryType,
 		args: {
-			id: { type: new GraphQLNonNull(GraphQLID) }
+			id: { type: new GraphQLNonNull(GraphQLID) },
+			imageSrc: { type: GraphQLString },
+			preloadImageSrc: { type: GraphQLString }
 		},
 		resolve(parent, args) {
 			return Category.findById(args.id)
