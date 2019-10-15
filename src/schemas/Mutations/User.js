@@ -1,5 +1,6 @@
 import {
 	GraphQLString,
+	GraphQLID
 } from 'graphql'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
@@ -53,6 +54,39 @@ const UserMutation = {
 			})
 
 			return newUser.save()
+		}
+	},
+	updateUser: {
+		type: UserType,
+		args: {
+			id: { type: GraphQLID },
+			password: { type: GraphQLString },
+			reEnterPassword: { type: GraphQLString },
+			firstName: { type: GraphQLString },
+			lastName: { type: GraphQLString },
+			imageSrc: { type: GraphQLString },
+			preloadImageSrc: { type: GraphQLString }
+		},
+		async resolve(parent, args, { user, authError }) {
+			const { id, ...toUpdate } = args
+			try {
+				if (authError) throw new Error(authError)
+				if (user.id !== id) throw new Error('[ERROR] Error in UPDATING user! You are not authorized to update this user! Please Login again')
+				const { password, reEnterPassword, ...rest } = toUpdate
+				
+				let filteredToUpdate
+				if (password) {
+					if (password !== reEnterPassword) throw new Error('[ERROR] Error in UPDATING user! Passwords doesn\'t match!')
+					filteredToUpdate = { ...rest, password } 
+				} else {
+					filteredToUpdate = {...rest}
+				}
+				
+				const updatedUser = await User.findOneAndUpdate({ _id: id }, filteredToUpdate, { new: true })
+				return updatedUser
+			} catch (err) {
+				return err
+			}
 		}
 	},
 	login: {
