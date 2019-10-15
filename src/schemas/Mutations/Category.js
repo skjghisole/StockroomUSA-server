@@ -15,12 +15,16 @@ const CategoryMutation = {
 	addCategory: {
 		type: CategoryType,
 		args: {
-			name: { type: GraphQLString }
+			name: { type: GraphQLString },
+			imageSrc: { type: GraphQLString },
+			preloadImageSrc: { type: GraphQLString }
 		},
 		resolve(parent, args, { authError, user }) {
-			const { name } = args
+			const { name, imageSrc, preloadImageSrc } = args
 			const category = new Category({
-				name
+				name,
+				imageSrc,
+				preloadImageSrc
 			})
 			if (authError) {
 				throw new Error(authError)

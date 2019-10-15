@@ -24,9 +24,11 @@ const UserMutation = {
 			username: { type: GraphQLString },
 			password: { type: GraphQLString },
 			firstName: { type: GraphQLString },
-			lastName: { type: GraphQLString }
+			lastName: { type: GraphQLString },
+			imageSrc: { type: GraphQLString }, 
+			preloadImageSrc: { type: GraphQLString }
 		},
-		async resolve(_, { email, username, password, firstName, lastName }) {
+		async resolve(_, { email, username, password, firstName, lastName, imageSrc, preloadImageSrc }) {
 			const user = await User.findOne({ $or: [ { email }, { username } ] })
 			if (user) {
 				if (user.email === email) {
@@ -45,7 +47,9 @@ const UserMutation = {
 				password,
 				username,
 				firstName,
-				lastName
+				lastName,
+				imageSrc,
+				preloadImageSrc
 			})
 
 			return newUser.save()

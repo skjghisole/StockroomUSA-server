@@ -7,6 +7,7 @@ import {
   GraphQLDateTime,
 } from 'graphql-iso-date'
 
+import { ImageType } from '../'
 import { CredentialType, RoleType } from './'
 
 const UserType = new GraphQLObjectType({
@@ -18,6 +19,15 @@ const UserType = new GraphQLObjectType({
 		createdAt: { type: GraphQLDateTime },
 		updatedAt: { type: GraphQLDateTime },
 		role: { type: RoleType },
+		profilePicture: {
+			type: ImageType,
+			resolve({ imageSrc, preloadImageSrc }) {
+				return {
+					imageSrc,
+					preloadImageSrc
+				}
+			}
+		},
 		credentials: {
 			type: CredentialType,
 			resolve(parent) {

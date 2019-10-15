@@ -12,7 +12,6 @@ import {
 
 import {
 	ProductType,
-	ImageType
 } from '../Types'
 
 
@@ -28,7 +27,7 @@ const ProductMutation = {
 			preloadImageSrc: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLString))) },
 		},
 		resolve(parent, args, ctx) {
-			const { name, quantity, categoryIds, brandIds, imageSrc } = args
+			const { name, quantity, categoryIds, brandIds, imageSrc, preloadImageSrc } = args
 			const { user, authError } = ctx
 			const product = new Product({
 				name,
