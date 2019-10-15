@@ -17,12 +17,14 @@ const BrandMutation = {
 	addBrand: {
 		type: BrandType,
 		args: {
-			name: { type: GraphQLString }
+			name: { type: GraphQLString },
+			imageSrc: { type: GraphQLString }
 		},
 		resolve(parent, args, { user, authError }) {
-			const { name } = args
+			const { name, imageSrc } = args
 			const brand = new Brand({
-				name
+				name,
+				imageSrc
 			})
 			if (authError) {
 				throw new Error(authError)

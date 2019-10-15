@@ -1,7 +1,6 @@
 import {
 	GraphQLID,
 	GraphQLList,
-	GraphQLString,
 	GraphQLNonNull
 } from 'graphql'
 

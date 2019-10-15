@@ -20,6 +20,7 @@ const BrandType = new GraphQLObjectType({
 		name: { type: GraphQLString },
 		createdAt: { type: GraphQLDateTime },
 		updatedAt: { type: GraphQLDateTime },
+		imageSrc: { type: GraphQLString },
 		categories: { type: new GraphQLList(CategoryType) },
 		products: {
 			type: new GraphQLList(ProductType),
