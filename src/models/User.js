@@ -12,6 +12,12 @@ const UserSchema = new Schema({
 		type: String,
 		required: true
 	},
+	imageSrc: {
+		type: String,
+	},
+	preloadImageSrc: {
+		type: String,
+	},
 	password: {
 		type: String,
 		required: true

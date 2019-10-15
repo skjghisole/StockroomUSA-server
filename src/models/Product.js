@@ -12,6 +12,8 @@ const ProductSchema = new Schema({
 		type: [ObjectId]
 	},
 	brandIds: [ObjectId],
+	imageSrc: [String],
+	preloadImageSrc: [String],
 	createdAt: Date,
 	updatedAt: Date
 }, { strict: true, timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' }})

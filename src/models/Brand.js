@@ -4,6 +4,8 @@ const { Schema, model } = mongoose
 
 const BrandSchema = new Schema({
 	name: String,
+	imageSrc: String,
+	preloadImageSrc: String,
 	createdAt: Date,
 	updatedAt: Date
 }, { strict: true, timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' }})
