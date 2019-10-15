@@ -17,9 +17,18 @@ import { BrandType, CategoryType, ImageType } from './'
 const ProductType = new GraphQLObjectType({
 	name: 'Product',
 	fields: () => ({
+		id: { type: GraphQLID },
 		name: { type: GraphQLString },
 		quantity: { type: GraphQLInt },
-		imageSrc: { type: new GraphQLList(ImageType) },
+		images: {
+			type: new GraphQLList(ImageType),
+			resolve({ imageSrc, preloadImageSrc }) {
+				return {
+					imageSrc,
+					preloadImageSrc
+				}
+			}
+		},
 		createdAt: { type: GraphQLDateTime },
 		updatedAt: { type: GraphQLDateTime },
 		brands: {
@@ -32,7 +41,6 @@ const ProductType = new GraphQLObjectType({
 				})
 			}
 		},
-		id: { type: GraphQLID },
 		categories: {
 			type: new GraphQLList(CategoryType),
 			resolve(parent, args) {

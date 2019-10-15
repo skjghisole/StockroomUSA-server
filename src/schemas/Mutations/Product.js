@@ -24,7 +24,8 @@ const ProductMutation = {
 			quantity: { type: GraphQLInt },
 			categoryIds: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) },
 			brandIds: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) },
-			imageSrc: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(ImageType))) }
+			imageSrc: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLString))) },
+			preloadImageSrc: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLString))) },
 		},
 		resolve(parent, args, ctx) {
 			const { name, quantity, categoryIds, brandIds, imageSrc } = args
@@ -34,7 +35,8 @@ const ProductMutation = {
 				quantity,
 				categoryIds,
 				brandIds,
-				imageSrc
+				imageSrc,
+				preloadImageSrc
 			})
 			
 			if (user.role === "ADMIN" && !authError) {
