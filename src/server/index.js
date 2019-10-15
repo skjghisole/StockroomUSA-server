@@ -39,6 +39,8 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 mongoose.connection.once('open', () => {
 	console.log('DB connected')
 })
+// useFindAndModify was deprecated, so thats why we set it to false
+mongoose.set('useFindAndModify', false);
 
 app.use('/graphql', graphqlHTTP({
 	graphiql: true,
