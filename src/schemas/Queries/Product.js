@@ -25,9 +25,6 @@ const ProductQueries = {
 	products: {
 		type: new GraphQLList(ProductType),
 		description: 'For querying all products',
-		args: {
-			name: { type: GraphQLString }
-		},
 		resolve() {
 			return Product.find({})
 		}

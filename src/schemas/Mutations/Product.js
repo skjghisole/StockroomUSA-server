@@ -22,16 +22,18 @@ const ProductMutation = {
 			name: { type: new GraphQLNonNull(GraphQLString) },
 			quantity: { type: GraphQLInt },
 			categoryIds: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) },
-			brandIds: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) }
+			brandIds: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) },
+			imageSrc: { type: new GraphQLNonNull(GraphQLString) }
 		},
 		resolve(parent, args, ctx) {
-			const { name, quantity, categoryIds, brandIds } = args
+			const { name, quantity, categoryIds, brandIds, imageSrc } = args
 			const { user, authError } = ctx
 			const product = new Product({
 				name,
 				quantity,
 				categoryIds,
-				brandIds
+				brandIds,
+				imageSrc
 			})
 			
 			if (user.role === "ADMIN" && !authError) {
@@ -80,6 +82,9 @@ const ProductMutation = {
 			},
 			categoryIds: {
 				type: new GraphQLList(GraphQLID)
+			},
+			imageSrc: {
+				type: GraphQLString
 			}
 		},
 		async resolve(parent, args, { user, authError }) {
