@@ -11,7 +11,8 @@ import {
 } from '../../models'
 
 import {
-	ProductType
+	ProductType,
+	ImageType
 } from '../Types'
 
 
@@ -23,7 +24,7 @@ const ProductMutation = {
 			quantity: { type: GraphQLInt },
 			categoryIds: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) },
 			brandIds: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) },
-			imageSrc: { type: new GraphQLNonNull(GraphQLString) }
+			imageSrc: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(ImageType))) }
 		},
 		resolve(parent, args, ctx) {
 			const { name, quantity, categoryIds, brandIds, imageSrc } = args

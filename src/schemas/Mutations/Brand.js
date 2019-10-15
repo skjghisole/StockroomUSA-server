@@ -10,6 +10,7 @@ import {
 
 import {
 	BrandType,
+	ImageType
 } from '../Types'
 
 
@@ -18,7 +19,7 @@ const BrandMutation = {
 		type: BrandType,
 		args: {
 			name: { type: GraphQLString },
-			imageSrc: { type: GraphQLString }
+			imageSrc: { type: ImageType }
 		},
 		resolve(parent, args, { user, authError }) {
 			const { name, imageSrc } = args

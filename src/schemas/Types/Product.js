@@ -11,7 +11,7 @@ import {
 } from 'graphql-iso-date'
 
 import { Brand, Category } from '../../models'
-import { BrandType, CategoryType } from './'
+import { BrandType, CategoryType, ImageType } from './'
 
 
 const ProductType = new GraphQLObjectType({
@@ -19,7 +19,7 @@ const ProductType = new GraphQLObjectType({
 	fields: () => ({
 		name: { type: GraphQLString },
 		quantity: { type: GraphQLInt },
-		imageSrc: { type: GraphQLString },
+		imageSrc: { type: new GraphQLList(ImageType) },
 		createdAt: { type: GraphQLDateTime },
 		updatedAt: { type: GraphQLDateTime },
 		brands: {
