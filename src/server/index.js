@@ -1,7 +1,8 @@
 import '@babel/polyfill'
 import express from 'express'
 import mongoose from 'mongoose'
-import graphqlHTTP from 'express-graphql'
+import { ApolloServer } from 'apollo-server-express'
+import { createServer } from 'http'
 import cors from 'cors'
 
 import schema from '../schemas'
@@ -42,11 +43,15 @@ mongoose.connection.once('open', () => {
 // useFindAndModify was deprecated, so thats why we set it to false
 mongoose.set('useFindAndModify', false);
 
-app.use('/graphql', graphqlHTTP({
-	graphiql: true,
-	schema,
-}))
+const gqlServer = new ApolloServer({
+	schema
+})
+const httpServer = createServer(app)
+gqlServer.installSubscriptionHandlers(httpServer)
 
 const port = PORT || 4545
 
-app.listen(port, () => console.log(`Started on http://localhost:${port}`))
+httpServer.listen(port, () => {
+	console.log(`Server on http://localhost:${port}${gqlServer.graphqlPath}`)
+	console.log(`Subscriptions on http://localhost:${port}${gqlServer.subscriptionsPath}`)
+})
