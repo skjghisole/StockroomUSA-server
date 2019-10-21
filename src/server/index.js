@@ -8,11 +8,23 @@ import cors from 'cors'
 import schema from '../schemas'
 
 import isAuthenticated from '../middlewares/isAuthenticated'
+import { pubsub } from '../utils'
 
 const app = express()
 
 app.use(cors())
 app.use(isAuthenticated)
+
+const gqlServer = new ApolloServer({
+	schema,
+  context: ({ req, res }) => {
+    return {
+      req,
+      res,
+      pubsub
+    }
+  },
+})
 
 const {
 	DB_USER_USERNAME,
@@ -43,15 +55,17 @@ mongoose.connection.once('open', () => {
 // useFindAndModify was deprecated, so thats why we set it to false
 mongoose.set('useFindAndModify', false);
 
-const gqlServer = new ApolloServer({
-	schema
+gqlServer.applyMiddleware({
+	app
 })
+
 const httpServer = createServer(app)
+
 gqlServer.installSubscriptionHandlers(httpServer)
 
 const port = PORT || 4545
 
 httpServer.listen(port, () => {
 	console.log(`Server on http://localhost:${port}${gqlServer.graphqlPath}`)
-	console.log(`Subscriptions on http://localhost:${port}${gqlServer.subscriptionsPath}`)
+	console.log(`Subscriptions on ws://localhost:${port}${gqlServer.subscriptionsPath}`)
 })
