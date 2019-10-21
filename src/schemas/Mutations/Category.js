@@ -11,6 +11,10 @@ import {
 	CategoryType,
 } from '../Types'
 
+import {
+	CATEGORY_ADDED
+} from '../Subscriptions/Category/constants'
+
 const CategoryMutation = {
 	addCategory: {
 		type: CategoryType,
@@ -19,20 +23,27 @@ const CategoryMutation = {
 			imageSrc: { type: GraphQLString },
 			preloadImageSrc: { type: GraphQLString }
 		},
-		resolve(parent, args, { req: { user, authError } }) {
+		async resolve(parent, args, { req: { user, authError }, pubsub }) {
 			const { name, imageSrc, preloadImageSrc } = args
-			const category = new Category({
-				name,
-				imageSrc,
-				preloadImageSrc
-			})
-			if (authError) {
-				throw new Error(authError)
-			} else if (user.role !== "ADMIN") {
-				throw new Error("NOT AUTHORIZED")
-			} else {
-				return category.save()
+			try {
+				const category = new Category({
+					name,
+					imageSrc,
+					preloadImageSrc
+				})
+				if (authError) {
+					throw new Error(authError)
+				} else if (user.role !== "ADMIN") {
+					throw new Error("NOT AUTHORIZED")
+				} else {
+					const newCategory = await category.save()
+					pubsub.publish(CATEGORY_ADDED, newCategory)
+					return newCategory
+				}
+			} catch (err) {
+				return err instanceof Error ? err.message : err
 			}
+			
 		}
 	},
 	removeCategory: {
