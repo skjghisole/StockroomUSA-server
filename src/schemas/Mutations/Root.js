@@ -17,7 +17,7 @@ const fields = {
 }
 
 const MutationType = new GraphQLObjectType({
-	name: 'Mutation',
+	name: 'MutationType',
 	fields
 })
 

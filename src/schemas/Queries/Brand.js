@@ -23,7 +23,7 @@ const BrandQueries = {
 	},
 	brands: {
 		type: new GraphQLList(BrandType),
-		resolve(_, __, { user }) {
+		resolve(_, __) {
 			return Brand.find({})
 		}
 	},

@@ -26,9 +26,8 @@ const ProductMutation = {
 			imageSrc: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLString))) },
 			preloadImageSrc: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLString))) },
 		},
-		resolve(parent, args, ctx) {
+		resolve(parent, args, { req: { user, authError } }) {
 			const { name, quantity, categoryIds, brandIds, imageSrc, preloadImageSrc } = args
-			const { user, authError } = ctx
 			const product = new Product({
 				name,
 				quantity,
@@ -54,7 +53,7 @@ const ProductMutation = {
 				type: GraphQLID
 			}
 		},
-		async resolve(parent, args, { user, authError }) {
+		async resolve(parent, args, { req: { user, authError } }) {
 			const { id } = args
 			try {
 				if (authError) throw new Error(authError)
@@ -89,7 +88,7 @@ const ProductMutation = {
 				type: GraphQLString
 			}
 		},
-		async resolve(parent, args, { user, authError }) {
+		async resolve(parent, args, { req: { user, authError } }) {
 			const { id, ...toUpdate } = args
 			try {
 				if (authError) throw new Error(authError)

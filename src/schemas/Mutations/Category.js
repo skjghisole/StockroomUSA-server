@@ -19,7 +19,7 @@ const CategoryMutation = {
 			imageSrc: { type: GraphQLString },
 			preloadImageSrc: { type: GraphQLString }
 		},
-		resolve(parent, args, { authError, user }) {
+		resolve(parent, args, { req: { user, authError } }) {
 			const { name, imageSrc, preloadImageSrc } = args
 			const category = new Category({
 				name,

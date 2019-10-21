@@ -14,7 +14,7 @@ import {
 const UserQueries = {
 	users: {
 		type: new GraphQLList(UserType),
-		resolve(_, args, { user, authError }) {
+		resolve(_, args, { req: { user, authError } }) {
 			try {
 				if (authError) {
 					throw new Error(authError)
@@ -40,7 +40,7 @@ const UserQueries = {
 	},
 	me: {
 		type: UserType,
-		async resolve(parent, _, { user, authError}) {
+		async resolve(parent, _, { req: { user, authError } }) {
 			if (authError) {
 				throw new Error(authError)
 			} else {

@@ -67,7 +67,7 @@ const UserMutation = {
 			imageSrc: { type: GraphQLString },
 			preloadImageSrc: { type: GraphQLString }
 		},
-		async resolve(parent, args, { user, authError }) {
+		async resolve(parent, args, { req: { user, authError } }) {
 			const { id, ...toUpdate } = args
 			try {
 				if (authError) throw new Error(authError)
