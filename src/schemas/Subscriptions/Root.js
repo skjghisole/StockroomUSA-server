@@ -3,11 +3,13 @@ import {
 } from 'graphql'
 
 import {
-	BrandSubscription
+	BrandSubscription,
+	CategorySubscription
 } from './'
 
 const fields = {
-	...BrandSubscription
+	...BrandSubscription,
+	...CategorySubscription
 }
 
 const SubscriptionType = new GraphQLObjectType({
