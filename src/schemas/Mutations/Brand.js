@@ -12,6 +12,9 @@ import {
 	BrandType,
 } from '../Types'
 
+import {
+	BRAND_ADDED
+} from '../Subscriptions/Brand/constants'
 
 const BrandMutation = {
 	addBrand: {
@@ -25,7 +28,7 @@ const BrandMutation = {
 				type: GraphQLString
 			}
 		},
-		resolve(parent, args, { user, authError }) {
+		resolve(parent, args, { req: { user, authError }, pubsub }) {
 			const { name, imageSrc, preloadImageSrc } = args
 			const brand = new Brand({
 				name,
@@ -37,7 +40,9 @@ const BrandMutation = {
 			} else if (user.role !== "ADMIN") {
 				throw new Error("NOT AUTHORIZED!")
 			} else {
-				return brand.save()
+				const brandAdded = brand.save()
+				pubsub.publish(BRAND_ADDED, brandAdded)
+				return brandAdded
 			}
 		}
 	},
@@ -46,7 +51,7 @@ const BrandMutation = {
 		args: {
 			id: { type: GraphQLID }
 		},
-		async resolve(_, args, { user, authError }) {
+		async resolve(_, args, { req: { user, authError } }) {
 			const { id } = args
 			try {
 				if (authError) {
@@ -70,7 +75,7 @@ const BrandMutation = {
 			name: { type: GraphQLString },
 			categoryIds: { type: new GraphQLList(GraphQLID) }
 		},
-		async resolve(parent, args, { user, authError }) {
+		async resolve(parent, args, { req: { user, authError } }) {
 			const { id, ...toUpdate } = args
 			try {
 				if (authError) throw new Error(authError)
