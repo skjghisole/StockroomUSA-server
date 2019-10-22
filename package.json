@@ -36,6 +36,7 @@
     "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/preset-env": "^7.6.3",
     "@babel/register": "^7.6.2",
+    "cz-conventional-changelog": "^3.0.2",
     "eslint": "^6.5.1",
     "jest": "^24.9.0",
     "nodemon": "^1.19.3"
@@ -52,6 +53,11 @@
     ],
     "moduleNameMapper": {
       "^mongoose$": "<rootDir>/node_modules/mongoose"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
     }
   }
 }
