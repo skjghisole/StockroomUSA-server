@@ -8,9 +8,13 @@ import { pubsub } from '../../../utils'
 const CategorySubscription = {
 	categoryAdded: {
 		type: CategoryType,
-		subscribe: withFilter(() => pubsub.asyncIterator(CATEGORY_ADDED), (payload, variables) => {
-			return true
-		}),
+		subscribe: withFilter(() =>
+			pubsub.asyncIterator(CATEGORY_ADDED),
+		// (payload, variables) => {
+			() => {
+				return true
+			}
+		),
 		resolve(payload) {
 			return payload
 		}		

@@ -14,14 +14,14 @@ import {
 const UserQueries = {
 	users: {
 		type: new GraphQLList(UserType),
-		resolve(_, args, { req: { user, authError } }) {
+		async resolve(_, args, { req: { user, authError } }) {
 			try {
 				if (authError) {
 					throw new Error(authError)
 				} else if (user.role !== "ADMIN") {
 					throw new Error("NOT AUTHORIZED!")
 				} else {
-					return User.find({})
+					return await User.find({})
 				}
 			} catch (e) {
 				return e
@@ -34,13 +34,13 @@ const UserQueries = {
 		args: {
 			username: { type: GraphQLString },
 		},
-		resolve(_, { username }) {
-			return User.findOne({ username })
+		async resolve(_, { username }) {
+			return await User.findOne({ username })
 		}
 	},
 	me: {
 		type: UserType,
-		async resolve(parent, _, { req: { user, authError } }) {
+		resolve(parent, _, { req: { user, authError } }) {
 			if (authError) {
 				throw new Error(authError)
 			} else {

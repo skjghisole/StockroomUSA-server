@@ -28,21 +28,25 @@ const BrandMutation = {
 				type: GraphQLString
 			}
 		},
-		resolve(parent, args, { req: { user, authError }, pubsub }) {
+		async resolve(parent, args, { req: { user, authError }, pubsub }) {
 			const { name, imageSrc, preloadImageSrc } = args
 			const brand = new Brand({
 				name,
 				imageSrc,
 				preloadImageSrc
 			})
-			if (authError) {
-				throw new Error(authError)
-			} else if (user.role !== "ADMIN") {
-				throw new Error("NOT AUTHORIZED!")
-			} else {
-				const brandAdded = brand.save()
-				pubsub.publish(BRAND_ADDED, brandAdded)
-				return brandAdded
+			try {
+				if (authError) {
+					throw new Error(authError)
+				} else if (user.role !== "ADMIN") {
+					throw new Error("NOT AUTHORIZED!")
+				} else {
+					const brandAdded = await brand.save()
+					pubsub.publish(BRAND_ADDED, brandAdded)
+					return brandAdded
+				}
+			} catch (err) {
+				return err
 			}
 		}
 	},

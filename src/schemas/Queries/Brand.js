@@ -17,14 +17,14 @@ const BrandQueries = {
 		args: {
 			id: { type: new GraphQLNonNull(GraphQLID) }
 		},
-		resolve(parent, args) {
-			return Brand.findById(args.id)
+		async resolve(parent, args) {
+			return await Brand.findById(args.id)
 		}
 	},
 	brands: {
 		type: new GraphQLList(BrandType),
-		resolve(_, __) {
-			return Brand.find({})
+		async resolve() {
+			return await Brand.find({})
 		}
 	},
 }

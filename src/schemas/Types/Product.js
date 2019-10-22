@@ -33,8 +33,8 @@ const ProductType = new GraphQLObjectType({
 		updatedAt: { type: GraphQLDateTime },
 		brands: {
 			type: new GraphQLList(BrandType),
-			resolve(parent, args) {
-				return Brand.find({
+			async resolve(parent) {
+				return await Brand.find({
 					_id: {
 						$in: parent.brandIds
 					}
@@ -43,7 +43,7 @@ const ProductType = new GraphQLObjectType({
 		},
 		categories: {
 			type: new GraphQLList(CategoryType),
-			resolve(parent, args) {
+			resolve(parent) {
 				return Category.find({
 					_id: {
 						$in: parent.categoryIds

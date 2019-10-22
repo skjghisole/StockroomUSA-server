@@ -26,7 +26,7 @@ const ProductMutation = {
 			imageSrc: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLString))) },
 			preloadImageSrc: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLString))) },
 		},
-		resolve(parent, args, { req: { user, authError } }) {
+		async resolve(parent, args, { req: { user, authError } }) {
 			const { name, quantity, categoryIds, brandIds, imageSrc, preloadImageSrc } = args
 			const product = new Product({
 				name,
@@ -36,13 +36,16 @@ const ProductMutation = {
 				imageSrc,
 				preloadImageSrc
 			})
-			
-			if (user.role === "ADMIN" && !authError) {
-				return product.save()
-			} else if (authError) {
-				throw new Error(authError)
-			} else {
-				throw new Error('NOT AUTHORIZED!')
+			try {
+				if (user.role === "ADMIN" && !authError) {
+					return await product.save()
+				} else if (authError) {
+					throw new Error(authError)
+				} else {
+					throw new Error('NOT AUTHORIZED!')
+				}
+			} catch (err) {
+				return err
 			}
 		}
 	},

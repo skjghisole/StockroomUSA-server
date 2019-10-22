@@ -32,8 +32,8 @@ const BrandType = new GraphQLObjectType({
 		categories: { type: new GraphQLList(CategoryType) },
 		products: {
 			type: new GraphQLList(ProductType),
-			resolve({id}) {
-				return Product.find({ brandIds: { $in: [id]  } })
+			async resolve({id}) {
+				return await Product.find({ brandIds: { $in: [id]  } })
 			}
 		}
 	})

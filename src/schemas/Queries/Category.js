@@ -19,14 +19,14 @@ const CategoryQueries = {
 			imageSrc: { type: GraphQLString },
 			preloadImageSrc: { type: GraphQLString }
 		},
-		resolve(parent, args) {
-			return Category.findById(args.id)
+		async resolve(parent, args) {
+			return await Category.findById(args.id)
 		}
 	},
 	categories: {
 		type: new GraphQLList(CategoryType),
-		resolve() {
-			return Category.find({})
+		async resolve() {
+			return await Category.find({})
 		}
 	},
 }

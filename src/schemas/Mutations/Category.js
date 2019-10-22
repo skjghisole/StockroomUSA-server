@@ -41,7 +41,7 @@ const CategoryMutation = {
 					return newCategory
 				}
 			} catch (err) {
-				return err instanceof Error ? err.message : err
+				return err
 			}
 			
 		}

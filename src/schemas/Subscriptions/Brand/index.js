@@ -8,10 +8,13 @@ import { pubsub } from '../../../utils'
 const BrandSubscription = {
 	brandAdded: {
 		type: BrandType,
-		subscribe: withFilter(() => pubsub.asyncIterator(BRAND_ADDED),
-			(payload, variables) => {
+		subscribe: withFilter(() =>
+			pubsub.asyncIterator(BRAND_ADDED),
+			// (payload, variables) => {
+			() => {
 				return true
-			}),
+			}
+		),
 		resolve(payload) {
 			return payload
 		}
