@@ -23,10 +23,13 @@ const ProductType = new GraphQLObjectType({
 		images: {
 			type: new GraphQLList(ImageType),
 			resolve({ imageSrc, preloadImageSrc }) {
-				return {
-					imageSrc,
-					preloadImageSrc
-				}
+				let images = imageSrc.reduce((acc, curr, index) => {
+					return acc.concat({
+						imageSrc: curr,
+						preloadImageSrc: preloadImageSrc[index]
+					})
+				}, [])
+				return images
 			}
 		},
 		createdAt: { type: GraphQLDateTime },
