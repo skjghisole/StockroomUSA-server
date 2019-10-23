@@ -1,0 +1,5 @@
+const PRODUCT_ADDED = 'PRODUCT_ADDED'
+
+export {
+	PRODUCT_ADDED
+}
