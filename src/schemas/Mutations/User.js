@@ -102,12 +102,12 @@ const UserMutation = {
 			try {
 				const user = await User.findOne({ email })
 				if (!user) {
-					throw "Email not found!"
+					throw new Error("Email not found!")
 				}
 
 				const validatePassword = await bcrypt.compare(password, user.password)
 				if (!validatePassword) {
-					throw "Invalid Password!"
+					throw new Error("Invalid Password!")
 				}
 				const token = await jwt.sign({ data: user }, process.env.SECRET_KEY, { expiresIn: Math.floor(60 * 60 * 24) })
 				return { token }
