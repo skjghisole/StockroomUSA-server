@@ -14,6 +14,9 @@ import {
 	ProductType,
 } from '../Types'
 
+import {
+	PRODUCT_ADDED
+} from '../Subscriptions/Product/constants'
 
 const ProductMutation = {
 	addProduct: {
@@ -26,7 +29,7 @@ const ProductMutation = {
 			imageSrc: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLString))) },
 			preloadImageSrc: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLString))) },
 		},
-		async resolve(parent, args, { req: { user, authError } }) {
+		async resolve(parent, args, { req: { user, authError }, pubsub }) {
 			const { name, quantity, categoryIds, brandIds, imageSrc, preloadImageSrc } = args
 			const product = new Product({
 				name,
@@ -38,7 +41,9 @@ const ProductMutation = {
 			})
 			try {
 				if (user.role === "ADMIN" && !authError) {
-					return await product.save()
+					const newProduct = await product.save()
+					pubsub.publish(PRODUCT_ADDED, newProduct)
+					return newProduct
 				} else if (authError) {
 					throw new Error(authError)
 				} else {
