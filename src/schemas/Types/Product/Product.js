@@ -10,8 +10,9 @@ import {
   GraphQLDateTime,
 } from 'graphql-iso-date'
 
-import { Brand, Category } from '../../models'
-import { BrandType, CategoryType, ImageType } from './'
+import { OutputSizeType } from './'
+import { Brand, Category } from '../../../models'
+import { BrandType, CategoryType, ImageType } from '../'
 
 
 const ProductType = new GraphQLObjectType({
@@ -19,7 +20,19 @@ const ProductType = new GraphQLObjectType({
 	fields: () => ({
 		id: { type: GraphQLID },
 		name: { type: GraphQLString },
-		quantity: { type: GraphQLInt },
+		quantity: {
+			type: GraphQLInt,
+			resolve({ sizes, quantity }) {
+				if (sizes.length > 0) {
+					return sizes.reduce((acc, curr) => {
+						return acc + curr.quantity
+					}, 0)
+				} else {
+					return quantity
+				}
+			}
+		},
+		price: { type: GraphQLInt },
 		images: {
 			type: new GraphQLList(ImageType),
 			resolve({ imageSrc, preloadImageSrc }) {
@@ -34,6 +47,9 @@ const ProductType = new GraphQLObjectType({
 		},
 		createdAt: { type: GraphQLDateTime },
 		updatedAt: { type: GraphQLDateTime },
+		sizes: {
+			type: new GraphQLList(OutputSizeType)
+		},
 		brands: {
 			type: new GraphQLList(BrandType),
 			async resolve(parent) {
