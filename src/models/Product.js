@@ -8,6 +8,14 @@ const ProductSchema = new Schema({
 		type: Number,
 		default: 0
 	},
+	price: {
+		type: Number,
+		default: 0
+	},
+	sizes: {
+		type: [Object],
+		default: []
+	},
 	categoryIds: {
 		type: [ObjectId]
 	},
