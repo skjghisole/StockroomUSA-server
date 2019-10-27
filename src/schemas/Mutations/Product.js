@@ -12,6 +12,7 @@ import {
 
 import {
 	ProductType,
+	InputSizeType
 } from '../Types'
 
 import {
@@ -24,20 +25,24 @@ const ProductMutation = {
 		args: {
 			name: { type: new GraphQLNonNull(GraphQLString) },
 			quantity: { type: GraphQLInt },
+			price: { type: GraphQLInt },
+			sizes: { type: new GraphQLList(InputSizeType) },
 			categoryIds: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) },
 			brandIds: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) },
 			imageSrc: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLString))) },
 			preloadImageSrc: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLString))) },
 		},
 		async resolve(parent, args, { req: { user, authError }, pubsub }) {
-			const { name, quantity, categoryIds, brandIds, imageSrc, preloadImageSrc } = args
+			const { name, quantity, price, categoryIds, brandIds, imageSrc, preloadImageSrc, sizes } = args
 			const product = new Product({
 				name,
 				quantity,
+				price,
 				categoryIds,
 				brandIds,
 				imageSrc,
-				preloadImageSrc
+				preloadImageSrc,
+				sizes
 			})
 			try {
 				if (user.role === "ADMIN" && !authError) {
@@ -85,6 +90,12 @@ const ProductMutation = {
 			},
 			quantity: {
 				type: GraphQLInt
+			},
+			price: {
+				type: GraphQLInt
+			},
+			sizes: {
+				type: new GraphQLList(InputSizeType)
 			},
 			brandIds: {
 				type: new GraphQLList(GraphQLID)
