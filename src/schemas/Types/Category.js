@@ -1,7 +1,8 @@
 import {
 	GraphQLObjectType,
 	GraphQLString,
-	GraphQLID
+	GraphQLID,
+	GraphQLList
 } from 'graphql'
 
 import {
@@ -12,18 +13,21 @@ import {
 	ImageType
 } from './'
 
+import { Category } from '../../models'
+
 const CategoryType = new GraphQLObjectType({
 	name: 'Category',
 	fields: () => ({
 		id: { type: GraphQLID },
 		name: { type: GraphQLString },
-		image: {
-			type: ImageType,
-			resolve({ imageSrc, preloadImageSrc }) {
-				return {
-					imageSrc,
-					preloadImageSrc
-				}
+		image: { type: ImageType },
+		parentCategoryIds: {
+			type: new GraphQLList(GraphQLID)
+		},
+		subCategories: {
+			type: new GraphQLList(CategoryType),
+			async resolve({ id }) {
+				return await Category.find({ parentCategoryIds: { $in: [id] } })
 			}
 		},
 		createdAt: { type: GraphQLDateTime },

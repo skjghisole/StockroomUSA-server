@@ -12,7 +12,8 @@ import {
 
 import {
 	ProductType,
-	InputSizeType
+	InputSizeType,
+	InputImageType
 } from '../Types'
 
 import {
@@ -29,19 +30,17 @@ const ProductMutation = {
 			sizes: { type: new GraphQLList(InputSizeType) },
 			categoryIds: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) },
 			brandIds: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLID))) },
-			imageSrc: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLString))) },
-			preloadImageSrc: { type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(GraphQLString))) },
+			images: { type: new GraphQLList(InputImageType) },
 		},
 		async resolve(parent, args, { req: { user, authError }, pubsub }) {
-			const { name, quantity, price, categoryIds, brandIds, imageSrc, preloadImageSrc, sizes } = args
+			const { name, quantity, price, categoryIds, brandIds, images, sizes } = args
 			const product = new Product({
 				name,
 				quantity,
 				price,
 				categoryIds,
 				brandIds,
-				imageSrc,
-				preloadImageSrc,
+				images,
 				sizes
 			})
 			try {
@@ -103,8 +102,8 @@ const ProductMutation = {
 			categoryIds: {
 				type: new GraphQLList(GraphQLID)
 			},
-			imageSrc: {
-				type: GraphQLString
+			images: {
+				type: new GraphQLList(InputImageType)
 			}
 		},
 		async resolve(parent, args, { req: { user, authError } }) {

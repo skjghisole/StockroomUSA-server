@@ -33,18 +33,7 @@ const ProductType = new GraphQLObjectType({
 			}
 		},
 		price: { type: GraphQLInt },
-		images: {
-			type: new GraphQLList(ImageType),
-			resolve({ imageSrc, preloadImageSrc }) {
-				let images = imageSrc.reduce((acc, curr, index) => {
-					return acc.concat({
-						imageSrc: curr,
-						preloadImageSrc: preloadImageSrc[index]
-					})
-				}, [])
-				return images
-			}
-		},
+		images: { type: new GraphQLList(ImageType) },
 		createdAt: { type: GraphQLDateTime },
 		updatedAt: { type: GraphQLDateTime },
 		sizes: {

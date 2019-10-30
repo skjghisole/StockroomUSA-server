@@ -23,11 +23,8 @@ const UserType = new GraphQLObjectType({
 		role: { type: RoleType },
 		profilePicture: {
 			type: ImageType,
-			resolve({ imageSrc, preloadImageSrc }) {
-				return {
-					imageSrc,
-					preloadImageSrc
-				}
+			resolve({ image }) {
+				return image
 			}
 		},
 		credentials: {

@@ -1,6 +1,8 @@
 import {
 	GraphQLString,
-	GraphQLID
+	GraphQLID,
+	GraphQLNonNull,
+	GraphQLList
 } from 'graphql'
 
 import {
@@ -9,6 +11,7 @@ import {
 
 import {
 	CategoryType,
+	InputImageType
 } from '../Types'
 
 import {
@@ -19,17 +22,17 @@ const CategoryMutation = {
 	addCategory: {
 		type: CategoryType,
 		args: {
-			name: { type: GraphQLString },
-			imageSrc: { type: GraphQLString },
-			preloadImageSrc: { type: GraphQLString }
+			name: { type: new GraphQLNonNull(GraphQLString) },
+			image: { type: InputImageType },
+			parentCategoryIds: { type: new GraphQLList(GraphQLID) }
 		},
 		async resolve(parent, args, { req: { user, authError }, pubsub }) {
-			const { name, imageSrc, preloadImageSrc } = args
+			const { name, image, parentCategoryIds } = args
 			try {
 				const category = new Category({
 					name,
-					imageSrc,
-					preloadImageSrc
+					image,
+					parentCategoryIds
 				})
 				if (authError) {
 					throw new Error(authError)
@@ -72,7 +75,8 @@ const CategoryMutation = {
 		type: CategoryType,
 		args: {
 			id: { type: GraphQLID },
-			name: { type: GraphQLString }
+			name: { type: GraphQLString },
+			image: { type: InputImageType }
 		},
 		async resolve(parent, args, { authError, user }) {
 			const { id, ...toUpdate } = args

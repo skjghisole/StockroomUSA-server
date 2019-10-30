@@ -1,7 +1,8 @@
 import {
 	GraphQLString,
 	GraphQLID,
-	GraphQLList
+	GraphQLList,
+	GraphQLNonNull
 } from 'graphql'
 
 import {
@@ -10,6 +11,7 @@ import {
 
 import {
 	BrandType,
+	InputImageType
 } from '../Types'
 
 import {
@@ -20,20 +22,14 @@ const BrandMutation = {
 	addBrand: {
 		type: BrandType,
 		args: {
-			name: { type: GraphQLString },
-			imageSrc: {
-				type: GraphQLString
-			},
-			preloadImageSrc: {
-				type: GraphQLString
-			}
+			name: { type: new GraphQLNonNull(GraphQLString) },
+			image: { type: InputImageType }
 		},
 		async resolve(parent, args, { req: { user, authError }, pubsub }) {
-			const { name, imageSrc, preloadImageSrc } = args
+			const { name, image } = args
 			const brand = new Brand({
 				name,
-				imageSrc,
-				preloadImageSrc
+				image
 			})
 			try {
 				if (authError) {
@@ -77,6 +73,7 @@ const BrandMutation = {
 		args: {
 			id: { type: GraphQLID },
 			name: { type: GraphQLString },
+			image: { type: InputImageType },
 			categoryIds: { type: new GraphQLList(GraphQLID) }
 		},
 		async resolve(parent, args, { req: { user, authError } }) {
