@@ -20,6 +20,7 @@ const ProductType = new GraphQLObjectType({
 	fields: () => ({
 		id: { type: GraphQLID },
 		name: { type: GraphQLString },
+		description: { type: GraphQLString },
 		quantity: {
 			type: GraphQLInt,
 			resolve({ sizes, quantity }) {

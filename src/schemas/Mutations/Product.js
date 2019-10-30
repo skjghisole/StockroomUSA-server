@@ -25,6 +25,7 @@ const ProductMutation = {
 		type: ProductType,
 		args: {
 			name: { type: new GraphQLNonNull(GraphQLString) },
+			description: { type: GraphQLString },
 			quantity: { type: GraphQLInt },
 			price: { type: GraphQLInt },
 			sizes: { type: new GraphQLList(InputSizeType) },
@@ -33,7 +34,7 @@ const ProductMutation = {
 			images: { type: new GraphQLList(InputImageType) },
 		},
 		async resolve(parent, args, { req: { user, authError }, pubsub }) {
-			const { name, quantity, price, categoryIds, brandIds, images, sizes } = args
+			const { name, quantity, price, categoryIds, brandIds, images, sizes, description } = args
 			const product = new Product({
 				name,
 				quantity,
@@ -41,7 +42,8 @@ const ProductMutation = {
 				categoryIds,
 				brandIds,
 				images,
-				sizes
+				sizes,
+				description
 			})
 			try {
 				if (user.role === "ADMIN" && !authError) {
@@ -85,6 +87,9 @@ const ProductMutation = {
 				type: GraphQLID
 			},
 			name: {
+				type: GraphQLString
+			},
+			description: {
 				type: GraphQLString
 			},
 			quantity: {

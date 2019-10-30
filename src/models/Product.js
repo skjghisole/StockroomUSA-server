@@ -4,6 +4,7 @@ const { Schema, model, Types: { ObjectId } } = mongoose
 
 const ProductSchema = new Schema({
 	name: String,
+	description: String,
 	quantity: {
 		type: Number,
 		default: 0
