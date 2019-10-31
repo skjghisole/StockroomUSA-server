@@ -10,7 +10,7 @@ import {
   GraphQLDateTime,
 } from 'graphql-iso-date'
 
-import { OutputSizeType } from './'
+import { SizeType } from './'
 import { Brand, Category } from '../../../models'
 import { BrandType, CategoryType, ImageType } from '../'
 
@@ -38,7 +38,7 @@ const ProductType = new GraphQLObjectType({
 		createdAt: { type: GraphQLDateTime },
 		updatedAt: { type: GraphQLDateTime },
 		sizes: {
-			type: new GraphQLList(OutputSizeType)
+			type: new GraphQLList(SizeType)
 		},
 		brands: {
 			type: new GraphQLList(BrandType),

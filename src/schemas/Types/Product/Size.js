@@ -5,8 +5,8 @@ import {
 	GraphQLInputObjectType
 } from 'graphql'
 
-const OutputSizeType = new GraphQLObjectType({
-	name: 'OutputSizeType',
+const SizeType = new GraphQLObjectType({
+	name: 'Size',
 	fields: () => ({
 		size: { type: GraphQLString },
 		quantity: { type: GraphQLInt }
@@ -15,7 +15,7 @@ const OutputSizeType = new GraphQLObjectType({
 
 
 const InputSizeType = new GraphQLInputObjectType({
-	name: 'InputSizeType',
+	name: 'InputSize',
 	fields: () => ({
 		size: { type: GraphQLString },
 		quantity: { type: GraphQLInt }
@@ -23,6 +23,6 @@ const InputSizeType = new GraphQLInputObjectType({
 })
 
 export {
-	OutputSizeType,
+	SizeType,
 	InputSizeType
 }

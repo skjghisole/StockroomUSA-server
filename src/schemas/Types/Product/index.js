@@ -1,8 +1,8 @@
 import ProductType from './Product'
-import { OutputSizeType, InputSizeType } from './Size'
+import { SizeType, InputSizeType } from './Size'
 
 export {
 	ProductType,
-	OutputSizeType,
+	SizeType,
 	InputSizeType
 }
