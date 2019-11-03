@@ -15,7 +15,8 @@ import {
 } from '../Types'
 
 import {
-	CATEGORY_ADDED
+	CATEGORY_ADDED,
+	CATEGORY_UPDATED
 } from '../Subscriptions/Category/constants'
 
 const CategoryMutation = {
@@ -54,7 +55,7 @@ const CategoryMutation = {
 		args: {
 			id: { type: GraphQLID }
 		},
-		async resolve(parent, args, { authError, user }) {
+		async resolve(parent, args, { req: { authError, user } }) {
 			const { id } = args
 			try {
 				if (authError) {
@@ -78,7 +79,7 @@ const CategoryMutation = {
 			name: { type: GraphQLString },
 			image: { type: InputImageType }
 		},
-		async resolve(parent, args, { authError, user }) {
+		async resolve(parent, args, { req: { authError, user }, pubsub }) {
 			const { id, ...toUpdate } = args
 			try {
 				if (authError) throw new Error(authError)
@@ -86,6 +87,7 @@ const CategoryMutation = {
 				
 				const updatedCategory = await Category.findOneAndUpdate({ _id: id }, toUpdate, { new: true })
 				if (!updatedCategory) throw new Error("[Error] Error in UPDATING category")
+				pubsub.publish(CATEGORY_UPDATED, updatedCategory)
 				return updatedCategory
 			} catch (err) {
 				return err
