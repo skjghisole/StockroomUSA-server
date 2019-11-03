@@ -1,7 +1,7 @@
 import { withFilter } from 'graphql-subscriptions'
 import { CategoryType } from '../../Types'
 
-import { CATEGORY_ADDED } from './constants' 
+import { CATEGORY_ADDED, CATEGORY_UPDATED } from './constants' 
 
 import { pubsub } from '../../../utils'
 
@@ -18,6 +18,15 @@ const CategorySubscription = {
 		resolve(payload) {
 			return payload
 		}		
+	},
+	categoryUpdated: {
+		type: CategoryType,
+		subscribe: withFilter(() => pubsub.asyncIterator(CATEGORY_UPDATED), () => {
+			return true
+		}),
+		resolve(payload) {
+			return payload
+		}
 	}
 }
 
