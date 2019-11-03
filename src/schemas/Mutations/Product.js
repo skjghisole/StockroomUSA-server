@@ -17,7 +17,8 @@ import {
 } from '../Types'
 
 import {
-	PRODUCT_ADDED
+	PRODUCT_ADDED,
+	PRODUCT_UPDATED
 } from '../Subscriptions/Product/constants'
 
 const ProductMutation = {
@@ -111,13 +112,14 @@ const ProductMutation = {
 				type: new GraphQLList(InputImageType)
 			}
 		},
-		async resolve(parent, args, { req: { user, authError } }) {
+		async resolve(parent, args, { req: { user, authError }, pubsub }) {
 			const { id, ...toUpdate } = args
 			try {
 				if (authError) throw new Error(authError)
 				if (user.role !== "ADMIN") throw new Error("NOT AUTHORIZED")
 				const updatedProduct = await Product.findOneAndUpdate({ _id: id }, toUpdate, { new: true })
 				if (!updatedProduct) throw new Error("[Error]: Error in UPDATING product")
+				pubsub.publish(PRODUCT_UPDATED, updatedProduct)
 				return updatedProduct
 			} catch (err) {
 				return err
