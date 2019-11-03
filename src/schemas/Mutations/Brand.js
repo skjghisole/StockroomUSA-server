@@ -15,7 +15,8 @@ import {
 } from '../Types'
 
 import {
-	BRAND_ADDED
+	BRAND_ADDED,
+	BRAND_UPDATED
 } from '../Subscriptions/Brand/constants'
 
 const BrandMutation = {
@@ -76,7 +77,7 @@ const BrandMutation = {
 			image: { type: InputImageType },
 			categoryIds: { type: new GraphQLList(GraphQLID) }
 		},
-		async resolve(parent, args, { req: { user, authError } }) {
+		async resolve(parent, args, { req: { user, authError }, pubsub }) {
 			const { id, ...toUpdate } = args
 			try {
 				if (authError) throw new Error(authError)
@@ -84,6 +85,7 @@ const BrandMutation = {
 
 				const updatedBrand = await Brand.findOneAndUpdate({ _id: id }, toUpdate, { new: true })
 				if (!updatedBrand) throw new Error("[Error]: Error in UPDATING brand")
+				pubsub.publish(BRAND_UPDATED, updatedBrand)
 				return updatedBrand
 			} catch (err) {
 				return err
