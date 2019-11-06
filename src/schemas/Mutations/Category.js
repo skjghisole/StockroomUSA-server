@@ -16,7 +16,8 @@ import {
 
 import {
 	CATEGORY_ADDED,
-	CATEGORY_UPDATED
+	CATEGORY_UPDATED,
+	CATEGORY_REMOVED
 } from '../Subscriptions/Category/constants'
 
 const CategoryMutation = {
@@ -55,7 +56,7 @@ const CategoryMutation = {
 		args: {
 			id: { type: GraphQLID }
 		},
-		async resolve(parent, args, { req: { authError, user } }) {
+		async resolve(parent, args, { req: { authError, user }, pubsub }) {
 			const { id } = args
 			try {
 				if (authError) {
@@ -66,6 +67,7 @@ const CategoryMutation = {
 
 				const removedCategory = await Category.findOneAndDelete({ _id: id })
 				if (!removedCategory) throw new Error(`Category of ID: (${id}) not found!`)
+				pubsub.publish(CATEGORY_REMOVED, removedCategory)
 				return removedCategory 
 			} catch (err) {
 				return err
