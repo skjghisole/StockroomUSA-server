@@ -16,7 +16,8 @@ import {
 
 import {
 	BRAND_ADDED,
-	BRAND_UPDATED
+	BRAND_UPDATED,
+	BRAND_REMOVED
 } from '../Subscriptions/Brand/constants'
 
 const BrandMutation = {
@@ -52,7 +53,7 @@ const BrandMutation = {
 		args: {
 			id: { type: GraphQLID }
 		},
-		async resolve(_, args, { req: { user, authError } }) {
+		async resolve(_, args, { req: { user, authError }, pubsub }) {
 			const { id } = args
 			try {
 				if (authError) {
@@ -60,9 +61,10 @@ const BrandMutation = {
 				} else if (user.role !== "ADMIN") {
 					throw new Error("NOT AUTHORIZED!")
 				} else {
-					const removed = await Brand.findOneAndDelete({ _id: id })
-					if (!removed) throw new Error(`Brand of ID:(${id}) not found!`)
-					return removed
+					const removedBrand = await Brand.findOneAndDelete({ _id: id })
+					if (!removedBrand) throw new Error(`Brand of ID:(${id}) not found!`)
+					pubsub.publish(BRAND_REMOVED, removedBrand)
+					return removedBrand
 				}
 			} catch (err) {
 				return err
