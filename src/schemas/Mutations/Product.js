@@ -18,7 +18,8 @@ import {
 
 import {
 	PRODUCT_ADDED,
-	PRODUCT_UPDATED
+	PRODUCT_UPDATED,
+	PRODUCT_REMOVED
 } from '../Subscriptions/Product/constants'
 
 const ProductMutation = {
@@ -68,13 +69,14 @@ const ProductMutation = {
 				type: GraphQLID
 			}
 		},
-		async resolve(parent, args, { req: { user, authError } }) {
+		async resolve(parent, args, { req: { user, authError }, pubsub }) {
 			const { id } = args
 			try {
 				if (authError) throw new Error(authError)
 				if (user.role !== "ADMIN") throw new Error("NOT AUTHORIZED")
 				const removedProduct = await Product.findOneAndDelete({ _id: id })
 				if (!removedProduct) throw new Error(`Product of ID: (${id}) not found!`)
+				pubsub.publish(PRODUCT_REMOVED, removedProduct)
 				return removedProduct
 			} catch (err) {
 				return err
