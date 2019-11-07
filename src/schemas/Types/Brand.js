@@ -11,7 +11,7 @@ import {
 
 import { Product } from '../../models'
 
-import { CategoryType, ProductType, ImageType } from './' 
+import { ProductType, ImageType } from './' 
 
 const BrandType = new GraphQLObjectType({
 	name: 'Brand',
@@ -21,7 +21,6 @@ const BrandType = new GraphQLObjectType({
 		createdAt: { type: GraphQLDateTime },
 		updatedAt: { type: GraphQLDateTime },
 		image: { type: ImageType },
-		categories: { type: new GraphQLList(CategoryType) },
 		products: {
 			type: new GraphQLList(ProductType),
 			async resolve({id}) {
