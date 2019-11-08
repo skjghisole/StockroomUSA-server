@@ -1,13 +1,15 @@
 import {
 	GraphQLID,
 	GraphQLList,
-	GraphQLNonNull
+	GraphQLNonNull,
+	GraphQLInt
 } from 'graphql'
 
 import { Product } from '../../models'
 
 import {
-	ProductType
+	ProductType,
+	DocumentCountType
 } from '../Types'
 
 const ProductQueries = {
@@ -26,6 +28,23 @@ const ProductQueries = {
 		description: 'For querying all products',
 		async resolve() {
 			return await Product.find({})
+		}
+	},
+	paginatedProducts: {
+		type: new GraphQLList(ProductType),
+		args: {
+			skip: { type: GraphQLInt, default: 0 },
+			limit: { type: GraphQLInt, default: 5 }
+		},
+		async resolve(parent, args) {
+			return await Product.find().limit(args.limit).skip(args.skip)
+		}
+	},
+	totalProductDocuments: {
+		type: DocumentCountType,
+		async resolve() {
+			const count = await Product.find().estimatedDocumentCount()
+			return { count }
 		}
 	}
 }
