@@ -3,6 +3,7 @@ import CategoryType from './Category'
 import { ProductType, OutputSizeType, InputSizeType } from './Product'
 import { UserType, CredentialType } from './User'
 import { ImageType, InputImageType } from './Image'
+import { DocumentCountType } from './DocumentCount'
 
 export {
 	BrandType,
@@ -13,5 +14,6 @@ export {
 	ProductType,
 	UserType,
 	OutputSizeType,
-	InputSizeType
+	InputSizeType,
+	DocumentCountType
 }
