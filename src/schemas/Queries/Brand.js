@@ -1,7 +1,7 @@
 import {
 	GraphQLID,
 	GraphQLList,
-	GraphQLNonNull
+	GraphQLString
 } from 'graphql'
 
 import { Brand } from '../../models'
@@ -15,10 +15,18 @@ const BrandQueries = {
 	brand: {
 		type: BrandType,
 		args: {
-			id: { type: new GraphQLNonNull(GraphQLID) }
+			id: { type: GraphQLID },
+			name: { type: GraphQLString }
 		},
 		async resolve(parent, args) {
-			return await Brand.findById(args.id)
+			const { id, ...rest } = args
+			let query
+			if (id) {
+				query = Object.assign({}, rest, { _id: id })
+			} else {
+				query = Object.assign({}, rest)
+			}
+			return await Brand.findOne(query)
 		}
 	},
 	brands: {
