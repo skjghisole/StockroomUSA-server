@@ -26,8 +26,16 @@ const ProductQueries = {
 	products: {
 		type: new GraphQLList(ProductType),
 		description: 'For querying all products',
-		async resolve() {
-			return await Product.find({})
+		args: {
+			ids: { type: new GraphQLList(GraphQLID)}
+		},
+		async resolve(parent, query) {
+			const { ids } = query
+			if (ids) {
+				return await Product.find({ _id: { $in: ids }})
+			} else {
+				return await Product.find({})
+			}
 		}
 	},
 	paginatedProducts: {
