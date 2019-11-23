@@ -1,14 +1,29 @@
 import {
 	GraphQLString,
-	GraphQLObjectType
+	GraphQLObjectType,
+	GraphQLInputObjectType
 } from 'graphql'
+
+const credentialProperties = {
+	fields: () => ({
+		firstName: { type: GraphQLString },
+		lastName: { type: GraphQLString },
+		email: { type: GraphQLString },
+		phone: { type: GraphQLString }
+	})
+}
 
 const CredentialType = new GraphQLObjectType({
 	name: 'UserCredential',
-	fields: () => ({
-		firstName: { type: GraphQLString },
-		lastName: { type: GraphQLString }
-	})
+	...credentialProperties
 })
 
-export default CredentialType
+const CredentialInputType = new GraphQLInputObjectType({
+	name: 'UserCredentialInput',
+	...credentialProperties
+})
+
+export {
+	CredentialType,
+	CredentialInputType
+}
