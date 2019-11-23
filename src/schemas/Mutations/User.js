@@ -11,7 +11,8 @@ import {
 
 import {
 	UserType,
-	InputImageType
+	InputImageType,
+	CredentialInputType
 } from '../Types'
 
 import {
@@ -25,11 +26,10 @@ const UserMutation = {
 			email: { type: GraphQLString },
 			username: { type: GraphQLString },
 			password: { type: GraphQLString },
-			firstName: { type: GraphQLString },
-			lastName: { type: GraphQLString },
+			credentials: { type: CredentialInputType },
 			image: { type: InputImageType }
 		},
-		async resolve(_, { email, username, password, firstName, lastName, image }) {
+		async resolve(_, { email, username, password, image, credentials }) {
 			try {
 				const user = await User.findOne({ $or: [ { email }, { username } ] })
 				if (user) {
@@ -48,8 +48,7 @@ const UserMutation = {
 					email,
 					password,
 					username,
-					firstName,
-					lastName,
+					credentials,
 					image
 				})
 				return await newUser.save()
@@ -64,8 +63,7 @@ const UserMutation = {
 			id: { type: GraphQLID },
 			password: { type: GraphQLString },
 			reEnterPassword: { type: GraphQLString },
-			firstName: { type: GraphQLString },
-			lastName: { type: GraphQLString },
+			credentials: { type: CredentialInputType },
 			image: { type: InputImageType },
 			preloadImageSrc: { type: GraphQLString }
 		},
