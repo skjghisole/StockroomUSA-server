@@ -17,7 +17,6 @@ const UserType = new GraphQLObjectType({
 		id: { type: GraphQLID },
 		email: { type: GraphQLString },
 		username: { type: GraphQLString },
-		// password: { type: GraphQLString },
 		createdAt: { type: GraphQLDateTime },
 		updatedAt: { type: GraphQLDateTime },
 		role: { type: RoleType },
@@ -28,14 +27,7 @@ const UserType = new GraphQLObjectType({
 			}
 		},
 		credentials: {
-			type: CredentialType,
-			resolve(parent) {
-				const { firstName, lastName } = parent
-				return {
-					firstName,
-					lastName
-				}
-			}
+			type: CredentialType
 		}
 	})
 })
