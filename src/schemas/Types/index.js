@@ -4,13 +4,15 @@ import { ProductType, OutputSizeType, InputSizeType } from './Product'
 import { UserType, CredentialType, AddressType, AddressInputType, CredentialInputType } from './User'
 import { ImageType, InputImageType } from './Image'
 import { DocumentCountType } from './DocumentCount'
-import TransactionType from './Transaction'
+import { TransactionType, ItemDetailsType, ItemDetailsInputType } from './Transaction'
 
 export {
 	BrandType,
 	CategoryType,
+
 	CredentialType,
 	CredentialInputType,
+
 	ImageType,
 	InputImageType,
 	ProductType,
@@ -23,5 +25,7 @@ export {
 	AddressType,
 	AddressInputType,
 
-	TransactionType
+	TransactionType,
+	ItemDetailsType,
+	ItemDetailsInputType
 }
