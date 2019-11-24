@@ -32,10 +32,7 @@ const TransactionSchema = new Schema({
 			default: ''
 		}
 	},
-	items: [ItemSchema],
-	productIds: {
-		type: [ObjectId]
-	},
+	itemDetails: [ItemSchema],
 	shippingAddress: {
 		mainAddress: {
 			type: String,
