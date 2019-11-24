@@ -6,14 +6,16 @@ import {
 	BrandMutations,
 	CategoryMutations,
 	ProductMutations,
-	UserMutations
+	UserMutations,
+	TransactionMutations
 } from './'
 
 const fields = {
 	...BrandMutations,
 	...CategoryMutations,
 	...ProductMutations,
-	...UserMutations
+	...UserMutations,
+	...TransactionMutations
 }
 
 const MutationType = new GraphQLObjectType({
