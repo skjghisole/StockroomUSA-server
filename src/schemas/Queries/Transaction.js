@@ -1,4 +1,4 @@
-import { GraphQLList } from 'graphql'
+import { GraphQLList, GraphQLID } from 'graphql'
 
 import { TransactionType } from '../Types'
 
@@ -11,7 +11,19 @@ const TransactionQuery = {
 		async resolve() {
 			return await Transaction.find({})
 		}
-	}
+	},
+	transaction: {
+		type: TransactionType,
+		description: 'Query transaction by ID',
+		args: {
+			id: {
+				type: GraphQLID
+			}
+		},
+		async resolve(parent, { id }) {
+			return await Transaction.findById(id)
+		}
+	},
 }
 
 export default TransactionQuery;
