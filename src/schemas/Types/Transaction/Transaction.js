@@ -1,8 +1,8 @@
-import { GraphQLObjectType, GraphQLList } from 'graphql';
+import { GraphQLObjectType, GraphQLList, GraphQLID } from 'graphql';
 
 import { AddressType, ProductType, CredentialType, ItemDetailsType } from '../';
 
-import { Product } from '../../../models/';
+import { Product, User } from '../../../models/';
 
 const TransactionType = new GraphQLObjectType({
 	name: 'Transaction',
@@ -25,8 +25,15 @@ const TransactionType = new GraphQLObjectType({
 				}, [])
 			}
 		},
+		ownerId: {
+			type: GraphQLID
+		},
 		recipient: {
-			type: CredentialType
+			type: CredentialType,
+			async resolve({ ownerId }) {
+				const user = await User.findById(ownerId)
+				return user.credentials;
+			}
 		}
 	})
 })
