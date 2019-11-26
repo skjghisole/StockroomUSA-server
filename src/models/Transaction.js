@@ -30,6 +30,10 @@ const TransactionSchema = new Schema({
 		email: {
 			type: String,
 			default: ''
+		},
+		phone: {
+			type: String,
+			default: ''
 		}
 	},
 	itemDetails: [ItemSchema],
@@ -53,6 +57,18 @@ const TransactionSchema = new Schema({
 		country: {
 			type: String,
 			default: 'Philippines'
+		},
+		zipCode: {
+			type: Number,
+			default: 5000
+		},
+		countryCode: {
+			type: String,
+			default: 'PH'
+		},
+		state: {
+			type: String,
+			default: ''
 		}
 	},
 	createdAt: Date,
