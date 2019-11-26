@@ -1,7 +1,8 @@
 import {
 	GraphQLString,
 	GraphQLObjectType,
-	GraphQLID
+	GraphQLID,
+	GraphQLList
 } from 'graphql'
 
 import {
@@ -28,6 +29,9 @@ const UserType = new GraphQLObjectType({
 		},
 		credentials: {
 			type: CredentialType
+		},
+		transactionIds: {
+			type: new GraphQLList(GraphQLID)
 		}
 	})
 })
