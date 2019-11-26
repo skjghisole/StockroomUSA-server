@@ -32,7 +32,7 @@ const UserQueries = {
 	user: {
 		type: UserType,
 		args: {
-			username: { type: GraphQLString },
+			username: { type: GraphQLString }
 		},
 		async resolve(_, { username }) {
 			return await User.findOne({ username })

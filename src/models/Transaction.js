@@ -18,24 +18,7 @@ const ItemSchema = new Schema({
 })
 
 const TransactionSchema = new Schema({
-	recipient: {
-		firstName: {
-			type: String,
-			default: ''
-		},
-		lastName: {
-			type: String,
-			default: ''
-		},
-		email: {
-			type: String,
-			default: ''
-		},
-		phone: {
-			type: String,
-			default: ''
-		}
-	},
+	ownerId: ObjectId,
 	itemDetails: [ItemSchema],
 	shippingAddress: {
 		mainAddress: {
