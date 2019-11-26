@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import { USER_ROLE } from '../constants'
 
-const { Schema, model } = mongoose
+const { Schema, model, Types: { ObjectId } } = mongoose
 
 const UserSchema = new Schema({
 	email: {
@@ -33,12 +33,20 @@ const UserSchema = new Schema({
 		email: {
 			type: String,
 			default: ''
+		},
+		phone: {
+			type: String,
+			default: ''
 		}
 	},
 	role: {
 		type: String,
 		required: true,
 		default: USER_ROLE
+	},
+	transactionIds: {
+		type: [ObjectId],
+		default: []
 	},
 	createdAt: Date,
 	updatedAt: Date
