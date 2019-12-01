@@ -1,5 +1,4 @@
 # StockroomUSA-server
-...
 This repository is the server for our StockroomUSA Project🔥
 
 
