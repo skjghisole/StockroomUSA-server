@@ -19,8 +19,14 @@ Welcome to Stockroom USA's Server 🚀
     ├── package-lock.json
     ├── package.json
     └── README.md
+    
+## Techstack 🖥
+1. Express
+2. Graphql 
+3. Mongoose (Mongo ODM)
+4. Mongodb (Database)
 
-## How to start
+## How to start ⏯
 
 1. first clone the repo with the following command
     ```shell
